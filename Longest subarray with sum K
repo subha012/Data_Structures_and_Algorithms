@@ -1,6 +1,7 @@
 class Solution {
     public int longestSubarray(int[] nums, int k) {		 
      //Optimal Solution TC = O(n) SC = O(n)
+	//If the array containing positive and negative then prefix sum is optimal
 		 int maxLen = 0;
 		 HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
 		 int sum = 0;
@@ -15,6 +16,24 @@ class Solution {
 			 map.putIfAbsent(sum, i);
 		 }
 		 return maxLen;
+//if the array contaions non-negative value the sliding window or two pointer is optimal
+/*
+int maxLen = 0;
+		 HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
+		 int left =0;
+		 int sum =0;
+		 for(int i =0;i<nums.length;i++) {
+			 sum +=nums[i];
+			 while(sum>k) {
+				 sum -= nums[left];
+				 left++;
+			 }
+			 if(sum == k) {
+				 maxLen= Math.max(maxLen, i-left+1);
+			 }
+		 }
+		 return maxLen;
+*/
 //Brute force TC=O(n2) SC = O(1)
         /*int maxlen = 0;
 		 for(int i =0;i<nums.length;i++) {
