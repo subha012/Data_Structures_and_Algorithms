@@ -1,0 +1,47 @@
+class Solution {
+    private void swap(int[] nums, int low, int mid) {
+		 int temp = nums[mid];
+		 nums[mid] = nums[low];
+		 nums[low] = temp;
+			
+	}
+    public void sortColors(int[] nums) {
+        //optimal TC = O(n) Sc =o(1)
+        int low=0,mid=0,high = nums.length-1;
+		 while(mid<=high){
+			 if(nums[mid] == 0) {
+				 swap(nums,low,mid);
+				 low++;
+				 mid++;
+			 }
+			 else if(nums[mid] == 1)mid++;
+			 else {// nums[mid] == 2
+				 swap(nums,mid,high);
+				 high--;
+			 }
+		 }
+
+        //Better TC = O(2n) Sc = O(1)
+		/* int cnt0=0,cnt1=0,cnt2=0;
+		 for(int i =0;i<nums.length;i++) {
+			 if(nums[i] == 0)cnt0++;
+			 else if(nums[i] == 1)cnt1++;
+			 else if(nums[i]==2)cnt2++;
+		 }
+		 int i =0;
+		 while(cnt0>0) {
+			 nums[i++]= 0;
+			 cnt0--;
+		 }
+		 while(cnt1>0) {
+			 nums[i++]= 1;
+			 cnt1--;
+		 }
+		 while(cnt2>0) {
+			 nums[i++]= 2;
+			 cnt2--;
+		 }*/
+	        
+	     //any sorting algo for brute force  TC =O(nlogn) SC = O(n)
+    }
+}
