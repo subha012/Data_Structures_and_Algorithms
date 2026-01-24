@@ -1,0 +1,32 @@
+class Solution {
+    public List<Integer> leaders(int[] nums) {
+        //OPtimal TC = O(N) sc = O(k)
+        List<Integer> list = new LinkedList<Integer>();
+		 list.add(nums[nums.length-1]);
+		 int max = nums[nums.length-1];
+		 for(int i = nums.length-2;i>=0;i--) {
+			 if(max<nums[i]) {
+				 list.add(nums[i]);
+			 }
+			 max  = Math.max(max, nums[i]);
+		 }
+		 Collections.reverse(list);
+		 return list;
+        //Time Complexity: O(N²) Two nested loops → for each i, inner loop may scan till end.
+        //Space Complexity: O(K) ,K = number of leaders stored in the list (worst case K = N).
+        //Auxiliary space (excluding output) = O(1).
+        /*List<Integer> list = new LinkedList<Integer>();
+		 for(int i =0;i<nums.length;i++) {
+			 for(int j =i;j<nums.length;j++) {
+				 if(nums[i]>nums[j]) {
+					 if(j ==nums.length-1)list.add(nums[i]);
+				 }
+				 else if(nums[i]<nums[j]) {
+					 break;
+				 }
+			 }
+		 }
+		 list.add(nums[nums.length-1]);
+		 return list;*/
+    }
+}
