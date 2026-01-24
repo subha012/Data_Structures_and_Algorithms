@@ -3,7 +3,7 @@ class Solution {
         //Optimal TC = O(n) Sc = O(n) 
         //here in one pass we are updating the array; 
         // posIndex is even negIndex = odd
-        int[] arr = new int[nums.length];
+        /*int[] arr = new int[nums.length];
 		 int posIndex = 0,negIndex =1;
 		 for(int i =0;i<nums.length;i++) {
 			 if(nums[i]>0) {
@@ -16,6 +16,25 @@ class Solution {
 			 }
 		 }
 		 
+		 return arr;*/
+        // Follow up - if the -ve and +ve value are not equal then use this methos
+         int arr[] = new int[nums.length];
+		 ArrayList<Integer> pos = new ArrayList<Integer>();
+		 ArrayList<Integer> neg = new ArrayList<Integer>();
+		 
+		 for(int i =0;i<nums.length;i++) {
+			 if(nums[i]>=0)pos.add(nums[i]);			 
+			 else neg.add(nums[i]);
+		 }
+		 int i = 0, pindex = 0, nindex = 0;
+		 while(pindex<pos.size() && nindex<neg.size()) {
+			 arr[i++] = pos.get(pindex++);
+			 arr[i++] = neg.get(nindex++);
+		 }
+		 while(pindex<pos.size())arr[i++] = pos.get(pindex++);
+		 while(nindex<neg.size())arr[i++] = neg.get(nindex++);
+		 
+	        
 		 return arr;
 
         //Brute force TC = O(2n) Sc = O(n)
