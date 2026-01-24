@@ -1,0 +1,51 @@
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+        //Optimal TC = O(n) Sc = O(n) 
+        //here in one pass we are updating the array; 
+        // posIndex is even negIndex = odd
+        int[] arr = new int[nums.length];
+		 int posIndex = 0,negIndex =1;
+		 for(int i =0;i<nums.length;i++) {
+			 if(nums[i]>0) {
+				 arr[posIndex] = nums[i];
+				 posIndex+=2;
+			 }
+			 else if(nums[i]<0) {
+				 arr[negIndex] = nums[i];
+				 negIndex+=2;	 
+			 }
+		 }
+		 
+		 return arr;
+
+        //Brute force TC = O(2n) Sc = O(n)
+        //Approach - separate the positive and negative 
+        //as you can see in all even place +ve values are there and in odd places -ve value so rum one  more loop to asign the values
+        /*int[] pos = new int[nums.length/2]; //O(n/2)-sc
+		 int p =0;
+		 int[] neg = new int[nums.length/2];//O(n/2) -sc        
+		 int n =0;
+		 for(int i =0;i<nums.length;i++) { //O(n) -tc
+			 if(nums[i]>0) {
+				 pos[p] = nums[i];
+				 p++;
+			 }
+			 else if(nums[i]<0) {
+				 neg[n] = nums[i];
+				 n++;				 
+			 }
+		 }
+		 int pindex = 0,nindex=0;
+		 for(int i = 0 ;i< nums.length;i++) {//O(n) -tc
+			 if(i%2 == 0) {
+				 nums[i] = pos[pindex];
+				 pindex++;
+			 }else {
+				 nums[i] = neg[nindex];
+				 nindex++;
+			 }
+		 }
+	        
+		 return nums;*/
+    }
+}
