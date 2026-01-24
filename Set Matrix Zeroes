@@ -1,0 +1,64 @@
+class Solution {
+    public static void setZeroes(int[][] matrix) {
+        //Better TC = O((n*m) +(n*m)) SC = O(n) +O(m)
+        int n = matrix.length;//row
+    	int m = matrix[0].length;///col
+    	int[] row = new int[n];//n
+    	int[] col = new int[m];//m
+    	for(int i =0;i<n;i++) { //n*m
+    		for(int j = 0;j<m;j++) {
+    			if(matrix[i][j] == 0) {
+    				row[i] = 1;
+    				col[j] = 1;
+    			}
+    		}
+    	}
+    	
+    	for(int i =0;i<n;i++) {//n*m
+    		for(int j =0;j<m;j++) {
+    			if(row[i] == 1 || col[j] ==1) {
+    				matrix[i][j] = 0;
+    			}
+    		}
+    	}
+    }
+    //Brute force    
+    //TC = (n*m) *(n+m) + (n*m) which is some where power 3 power of n
+    /*public static void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        for(int i =0;i<n;i++) {//n*m
+        	for(int j = 0;j<m;j++) {
+        		if(matrix[i][j] == 0) {
+        			markRow(matrix, i);//n
+        			markCol(matrix,j);//m
+        		}
+        	}
+        }
+        //converting from -1 to zero
+        for(int i =0;i<n;i++) { //n*m
+        	for(int j =0;j<m;j++) {
+        		if(matrix[i][j]== -1) {
+        			matrix[i][j] = 0;
+        		}
+        	}
+        	System.out.println();
+        }
+    
+    }
+    //to mark the row as -1
+    public static void markRow(int[][] matrix,int row) {
+    	for(int i = 0;i<matrix[0].length;i++) {
+    		if(matrix[row][i] == 0)continue;
+    		else matrix[row][i] = -1;
+    	}
+    }
+    //mark col as -1
+    public static void markCol(int[][] matrix,int col) {
+    	for(int i = 0;i<matrix.length;i++) {
+    		if(matrix[i][col] == 0)continue;
+    		else matrix[i][col] = -1;
+    	}
+    }*/
+}
