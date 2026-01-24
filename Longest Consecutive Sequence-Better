@@ -1,0 +1,22 @@
+public int longestConsecutive(int[] nums) {
+        //better TC = O(N) SC = O(1) 
+        // first sort the array then take smallest 
+        int n = nums.length;
+        int longest = 1;
+        if(n == 0)return 0;
+        Arrays.sort(nums);
+        int smallest = nums[0];
+        int count = 1;
+        for(int i =0;i<n;i++) {
+        	if(nums[i] == smallest+1) {
+        		count++;
+        		smallest=nums[i];
+        	}
+        	else if(nums[i] != smallest) {
+        		count =1;
+        		smallest = nums[i];
+        	}
+        	longest = Math.max(count, longest);
+        }
+        return longest;
+}
