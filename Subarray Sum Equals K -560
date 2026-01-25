@@ -1,0 +1,33 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        //OPtimal TC = O(n) SC =O(n) Prefix sum
+		//in map storing the sum and checking if the sum - k is present there in sum or not if present will
+		//take the value of that sum adding it to count
+        int count =0;
+        int sum =0;
+        HashMap< Integer, Integer> map = new HashMap<Integer, Integer>();
+        map.put(0, 1);
+        for(int i =0;i<nums.length;i++) {
+        	sum+=nums[i];
+        	if(map.containsKey(sum - k)) {
+        		count +=map.get(sum-k);
+        	}
+        	map.put(sum, map.getOrDefault(sum,0)+1);
+        }
+        
+        return count;
+
+
+        //brute force TC= O(N2) SC = O(1)
+        /*int count =0;
+        for(int i =0;i<nums.length;i++) {
+        	int sum =0;
+        	for(int j =i;j<nums.length;j++) {
+        		sum+=nums[j];
+        		if(sum == k)count++;
+        				
+        	}
+        }
+		return count;*/
+    }
+}
