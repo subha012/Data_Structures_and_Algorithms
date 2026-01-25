@@ -1,0 +1,47 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        //OPtimal  - transpose the matrix then reverse each row
+        //TC = O(n2) SC =O(1);
+        int n = matrix.length;
+        
+        // Transpose the matrix
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                
+                // Swap elements across the diagonal
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+                
+            }
+        }
+        
+        // Reverse each row of the matrix
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                
+                // Swap elements symmetrically
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - 1 - j];
+                matrix[i][n - 1 - j] = temp;
+                
+            }
+        }
+
+        //Brute force TC = O(2N^2) SC= O(N)
+        /*int n = matrix.length;
+        int[][] matrix2 = new int[n][n];   // SC - O(n2)      
+        
+        int row=0,col =0;
+        for(int i = 0;i<matrix.length;i++) {//TC - O(n2)
+        	for(int j = 0;j<matrix.length;j++) {
+        		matrix2[j][n-1-i] = matrix[i][j];
+        	}
+        }
+        for(int i = 0;i<matrix.length;i++) {//TC - O(n2)
+        	for(int j = 0;j<matrix.length;j++) {
+        		matrix[i][j] = matrix2[i][j];
+        	}
+        }*/
+    }
+}
