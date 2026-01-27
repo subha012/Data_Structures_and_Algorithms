@@ -1,0 +1,27 @@
+class Solution {
+    public int subarraysWithXorK(int[] nums, int k) {
+        
+        //Better TC = O(N2) SC = O(1)
+      /*int count = 0;        
+        for(int i =0;i<nums.length;i++) {
+        	int xor = 0;
+        	for(int j =i;j<nums.length;j++) {        		
+        		xor = xor^nums[j];
+        		if(xor == k)count++;
+        	}
+        }
+    	return count;*/
+        //Brute TC =O(N3) SC = O(1)
+        /*int count = 0;        
+        for(int i =0;i<nums.length;i++) {        	
+        	for(int j =i;j<nums.length;j++) { 
+    			int xor = 0;
+        		for(int m = i;m<=j;m++) {
+            		xor = xor^nums[m];
+        		}
+        		if(xor == k)count++;
+        	}
+        }
+    	return count;*/
+    }
+}
