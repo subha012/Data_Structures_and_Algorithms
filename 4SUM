@@ -1,7 +1,72 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        //Better
+        //Optimal
+        /*
+        Time Complexity: O(N3), where N is the size of the given array.
+Sorting the array takes O(NlogN) time, and the 3 nested loops take O(N3) time. Thus, the overall time complexity is O(N3) + O(NlogN), which boils down to O(N3).
+
+Space Complexity: O(no. of quadruplets), this space is only used to store the answer. No extra space is used to solve this problem. So, from that perspective, space complexity can be written as O(1).
+        */
+        int n = nums.length;
+        List<List<Integer>> quar = new LinkedList<List<Integer>>();
+        Arrays.sort(nums);
+        for(int i =0;i<n;i++) {
+        	if(i>0 && nums[i] == nums[i-1]) continue;
+        	for(int j =i+1;j<n;j++) {
+        		if(j>i+1 && nums[j] == nums[j-1] ) continue;
+        		int k = j+1;
+        		int m = n-1;
+                while(k<m){
+                    long sum  = (long)nums[i]+nums[j]+nums[k]+nums[m];
+        			if(sum == target) {
+        				List<Integer> list = new LinkedList<Integer>();
+        				list.add(nums[i]);
+        				list.add(nums[j]);
+        				list.add(nums[k]);
+        				list.add(nums[m]);
+        				quar.add(list);
+        				k++;
+        				m--;
+        				while(k<m && nums[k] == nums[k-1])k++;
+        				while(k<m && nums[m]== nums[m+1])m--;
+          			}
+        			else if(sum<target) {
+        				k++;
+        			}else {
+        				m--;
+        			}
+                }
+        			
+        		}
+        }
         
+    	return quar;
+        //Better TC = O(N3*log(M)) for using 3 nested loops and inside the loops there are some operations on the set data structure which take log(M) time complexity, where N is size of the array, M is number of elements in the set.
+        // SC- O(N3)
+        /*int n = nums.length;
+        Set<List<Integer>> quar = new LinkedHashSet<List<Integer>>();
+        for(int i =0;i<n;i++) {
+        	for(int j =i+1;j<n;j++) {
+        		Set<Long> set = new HashSet<Long>();
+        		for(int k = j+1;k<n;k++) {
+                     long sum = (long) nums[i] + nums[j] + nums[k];
+                    long fourth = target - sum; 
+        			if(set.contains(fourth)) {
+        				List<Integer> list = new LinkedList<Integer>();
+        				list.add(nums[i]);
+        				list.add(nums[j]);
+        				list.add(nums[k]);
+        				list.add((int)fourth);
+        				Collections.sort(list);
+        				quar.add(list);
+        			}
+        			set.add((long) nums[k]);
+        		}
+        	}
+        }
+        
+    	List<List<Integer>> ans = new ArrayList<List<Integer>>(quar);
+    	return ans;*/
         //Brute TC = O(n4) SC = Result Set (LinkedHashSet<List<Integer>>) In worst case, number of unique quadruplets → O(n³)
         /*Set<List<Integer>> quar = new LinkedHashSet<List<Integer>>();
         for(int i =0;i<nums.length;i++) {
