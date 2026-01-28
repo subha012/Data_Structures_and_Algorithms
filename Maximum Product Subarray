@@ -1,0 +1,42 @@
+class Solution {
+    public int maxProduct(int[] nums) {
+        //OPtimal TC = O(N) SC = O(1)
+        int maxP = Integer.MIN_VALUE;
+			int maxS = Integer.MIN_VALUE;
+			int n = nums.length;
+			int prefix = 1,suffix = 1;
+			for (int i = 0; i < nums.length; i++) {
+				if(suffix == 0)suffix = 1;
+				if (prefix == 0) prefix = 1;
+				prefix*=nums[i];
+				maxP = Math.max(maxP,prefix);
+				suffix *= nums[n-1];
+				maxS = Math.max(maxS, suffix);
+				n--;
+			}
+			
+			return Math.max(maxS, maxP);
+        //Better TC = O(N2) SC = O(1)
+        /*int maxP = Integer.MIN_VALUE;
+			for (int i = 0; i < nums.length; i++) {
+				int prod = 1;
+				for (int j = i; j < nums.length; j++) {
+					prod = prod * nums[j];
+				    maxP = Math.max(maxP, prod);
+				}
+			}
+			return maxP;*/
+        //Brute TC = O(N3) SC - O(1)
+        /*int maxP = Integer.MIN_VALUE;
+		 for(int i =0;i<nums.length;i++) {
+			 for(int j = i;j<nums.length;j++) {
+				 int prod = 1;
+				 for(int k = i;k<=j;k++) {
+					 prod = prod*nums[k];
+				 }
+				 maxP = Math.max(maxP, prod);
+			 }
+		 }
+		 return maxP;*/
+    }
+}
