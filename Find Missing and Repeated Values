@@ -1,0 +1,47 @@
+class Solution {
+    public int[] findMissingAndRepeatedValues(int[][] grid) {
+        //Optimal TC = O(N2) SC =O(1)
+        int N = grid.length;
+	        long n = (int)N*N;
+	        int repetated = 0;
+	        int missing =0;
+	        long sum = 0;
+	        long squareOfSum = 0;
+	        for(int i =0;i<N;i++) {
+	        	for(int j = 0;j<grid[0].length;j++) {
+	        		sum+=grid[i][j];
+	        		squareOfSum+= (long) grid[i][j] * grid[i][j];
+	        	}
+	        }
+	        
+	        long nNaturalSum = n*(n+1)/2;
+	        long nNaturalSquareSum = n*(n+1)*(2*n+1)/6;
+	        
+	        long diffSum = sum - nNaturalSum;
+	        long diffSquareSum = squareOfSum-nNaturalSquareSum;
+	        
+	        long sumXY = diffSquareSum/diffSum;
+	        repetated = (int) (diffSum+sumXY)/2;
+	        missing = (int)sumXY - repetated;
+	        return new int[] {repetated,missing};
+        //Brute  TC = O(2N2) SC = O(N2)
+        /*int n = grid.length;
+	        int repetated = 0;
+	        int missing =0;
+	        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+	        for(int i =0;i<n;i++) {
+	        	for(int j = 0;j<grid[0].length;j++) {
+	        		map.put(grid[i][j], map.getOrDefault(grid[i][j], 0)+1);
+	        		if(map.getOrDefault(grid[i][j],0)>=2) {
+	        			repetated = grid[i][j];
+	        		}
+	        	}
+	        }
+	        for(int i =1;i<=n*n;i++) {
+	        	if(!map.containsKey(i)) {
+	        		missing = i;
+	        	}
+	        }
+	        return new int[] {repetated,missing};*/
+    }
+}
