@@ -1,6 +1,18 @@
 class Solution {
     public int subarraysWithXorK(int[] nums, int k) {
-        
+        //Optimal TC = O(N) SC = O(N)
+		int count = 0;
+    	int xr =0;
+    	HashMap<Integer, Integer> map =new HashMap<Integer, Integer>();
+    	map.put(xr, 1);
+    	for(int i =0;i<nums.length;i++) {
+    		xr = xr^nums[i]; //refer note
+      		int x = xr^k;
+      		count+=  map.getOrDefault(x,0); // using getOrDefault because when there is no element in map the count 
+                                            //will add 0 if we have used map.get(x) then excetion would have occured
+      		map.put(xr, map.getOrDefault(xr, 0)+1);
+    	}
+    	return count;
         //Better TC = O(N2) SC = O(1)
       /*int count = 0;        
         for(int i =0;i<nums.length;i++) {
