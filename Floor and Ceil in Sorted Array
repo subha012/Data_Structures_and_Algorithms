@@ -1,0 +1,28 @@
+class Solution {
+//Brute - TC = O(LOGN) SC = O(1)
+    public int[] getFloorAndCeil(int[] nums, int x) {
+       int [] ans = {-1,-1};
+		int low = 0,high = nums.length-1;
+		while(low<=high) {
+			int mid = low + (high - low) / 2;
+			if(nums[mid]>= x) {
+				ans[1] = nums[mid];
+				high = mid-1;
+			}else {
+				low = mid+1;
+			}
+		}
+		int low2 = 0,high2 = nums.length-1;
+		
+		while(low2<=high2) {
+      int mid = low + (high - low) / 2; // BEST PRACTICE TO USE IT
+			if(nums[mid]<= x) {
+				ans[0] = nums[mid];
+				low2 = mid+1;
+			}else {
+				high2 = mid-1;
+			}
+		}
+		return ans;
+    }
+}
