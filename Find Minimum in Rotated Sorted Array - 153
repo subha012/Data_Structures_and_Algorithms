@@ -1,0 +1,24 @@
+class Solution {
+    public int findMin(int[] nums) {
+        //Optimal  TC = O(LOGN) SC = O(1)
+         int a = Integer.MAX_VALUE;
+        int low = 0,high = nums.length-1;
+        while(low<=high) {
+        	int mid = low+(high-low)/2;
+        	if(nums[low]<=nums[mid]) {
+        		a = Math.min(a, nums[low]);
+        		low=mid+1;
+        	}else {
+        		a = Math.min(a, nums[mid]);
+        		high=mid-1;
+        	}
+        }
+		return a;
+        //Brute TC = O(N) SC = O(1)
+        /*int a = Integer.MAX_VALUE;
+        for(int i =0;i<nums.length;i++) {
+        	a = Math.min(a, nums[i]);
+        }
+		return a;*/
+    }
+}
