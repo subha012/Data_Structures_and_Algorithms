@@ -12,6 +12,7 @@ class Solution {
          //Optimal TC = O(LOGN) SC = O(1)
           int ans[] = {-1,-1};
 		 ans[0] = firstOccurance(nums, target);
+		if(ans[0] == -1) return ans;
 		 ans[1] = lastOccurance(nums,target);
 		 return ans;
 	 }
