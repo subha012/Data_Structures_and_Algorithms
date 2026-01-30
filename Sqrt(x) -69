@@ -1,5 +1,30 @@
 class Solution {
     public int mySqrt(int x) {
-        return (int) Math.pow(x,0.5);
+        //Optimal TC = O(logN) SC = O(1)
+        int low = 1,high = x;
+        while(low<=high) {
+        	int mid = low +(high-low)/2;
+        	long val = (long)mid*(long)mid;
+        	if(val <= (long)x) {
+        		low = mid+1; //if the multiplecation value is <= then move the low to right 
+        	}
+            else {
+                high = mid-1; // the val is greater that X then move to left
+            }
+        }
+        return high;
+        //Brute II TC = O(N) SC = O(1)
+        /*int ans = 0;
+        for(int i =1;i<=x;i++){
+        	long val = (long)i *(long)i;
+            if(val<=(long)x){
+                ans = i;
+            }else{
+                break;
+            }
+        }
+        return ans;*/
+        //Brute I
+        //return (int) Math.pow(x,0.5);
     }
 }
