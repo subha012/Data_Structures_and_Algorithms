@@ -1,12 +1,48 @@
 class Solution {
     public int singleNonDuplicate(int[] nums) {
+        //Optimal TC = O(LOGN) SC = O(1)
+        // as in array there will be twice a number and only one single value and the duplicates will be like in even,odd(left array will eliminate) or odd,even(right array will be eliminate) index
         int n = nums.length;
-        if(n == 1)return nums[0];
-        for(int i =0;i<n-1;i+=2) {
-        	if(nums[i] != nums[i+1]) {
-        		return nums[i];
-        	}
+		if(n ==1)return nums[0];
+		if(nums[0] != nums[1])return nums[0]; // Edge case staring index- if(we will check the previous value then it will through exception
+		if(nums[n-1]!=nums[n-2])return nums[n-1]; //Ending index if(we will check the after value then it will through exception
+		int low = 0,high = n-1;
+		while(low<=high) {
+			int mid = low+(high-low)/2;
+			if(nums[mid] != nums[mid-1] && nums[mid]!= nums[mid+1]) {
+				return nums[mid];
+			}else if((mid%2 == 1 && nums[mid] == nums[mid-1]) ||(mid%2 == 0 && nums[mid] == nums[mid+1])) {
+				low = mid+1;
+			}else {
+				high = mid-1;
+			}
+		}
+		return nums[nums.length-1];
+        //Brute III TC = O(N) SC = O(1)
+        /*if(nums.length ==1)return nums[0];
+		for(int i =0;i<nums.length;i++) {
+			if(i == 0) { // before 0 there is no index it can be overflow exception
+				if(nums[i] != nums[i+1]) return nums[i];
+			}else if (i == nums.length-1) {// AFTER n-1 there is no index it can be overflow exception
+				if(nums[i]!=nums[i-1]) return nums[i];
+			}else {
+				if(nums[i]!=nums[i+1] && nums[i] != nums[i-1]) {
+					return nums[i];
+				}
+			}
+		}
+		return nums[nums.length-1];*/
+
+        //Brute II TC = O(N) SC = O(1)
+        /*for(int i =0;i<nums.length-1;i+=2) {
+        	if((nums[i] ^ nums[i+1]) != 0)return nums[i]; // a^a = 0 a^b != 0
         }
-        return nums[n-1];
-    } 
+		return nums[nums.length-1];*/
+
+        //Brute TC = O(N) SC = O(1)
+        /*for(int i =0;i<nums.length-1;i+=2) {
+        	if(nums[i] != nums[i+1])return nums[i];
+        }
+		return nums[nums.length-1];*/
+    }
 }
