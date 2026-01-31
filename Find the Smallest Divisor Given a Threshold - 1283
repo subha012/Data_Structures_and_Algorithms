@@ -1,0 +1,43 @@
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        //Optimal TC = O(N)+(O(N)*O(logMax)) = O(logMax*N) 
+        //SC = O(1)
+        int max = Integer.MIN_VALUE;
+		for(int i =0;i<nums.length;i++) { //O(N)
+			max = Math.max(max, nums[i]);
+		}
+		int min =1;
+		int ans = -1;
+		while(min<=max) {//O(logMax)
+			int mid = min+(max-min)/2;
+			int divisorSum = getDivisorSum(nums,mid);//O(N)
+			if(divisorSum<=threshold) {
+				ans = mid;
+				max = mid-1;
+			}else {
+				min = mid+1;
+			}
+		}
+		return ans;
+        //Brute TC = O(N)+O(N)*O(MAX) = O(MAX*N) SC = O(1)
+		/*int max = Integer.MIN_VALUE;
+		for(int i =0;i<nums.length;i++) {//O(N)
+			max = Math.max(max, nums[i]);
+		}
+		for(int i =1;i<=max;i++) {//O(MAX)
+			int divisorSum = getDivisorSum(nums,i); //O(N)
+			if(divisorSum<=threshold) {
+				return i;
+			}
+		}
+		System.out.println();
+		return -1;*/
+    }
+	private int getDivisorSum(int[] nums, int min) {//O(N)
+		int sum =0;
+		for(int i =0;i<nums.length;i++) {
+			sum += Math.ceil((double)nums[i]/min);
+		}
+		return sum;
+	}
+}
