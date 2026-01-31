@@ -1,0 +1,29 @@
+class Solution {
+    private int getDays(int[] weights, int cap) {//TC = O(N)
+		int days = 1;
+		int sum =0;
+		for(int i =0;i<weights.length;i++) {
+			sum+=weights[i];
+			if(sum>cap) {
+				days++;
+				sum =weights[i];
+			}
+		}
+		return days;
+	}
+	public int shipWithinDays(int[] weights, int days) {
+        //Brute TC = O(N) + (O(N)*O(max-min+1)) =~ O(N*(MAX-MIN+1)) SC = O(1)
+        int min =  Integer.MIN_VALUE;//max value from array;
+        int max = 0; // sum of all element in the array
+        for(int i =0;i<weights.length;i++) {//TC = O(N)
+        	min = Math.max(min, weights[i]);
+        	max+=weights[i];         		
+        }
+        if(days == 1)return max;
+        for(int cap =min;cap<=max;cap++) {//TC = O(max-min+1)
+        	int requiredDays = getDays(weights,cap);//TC = O(N)
+        	if(requiredDays <= days)return cap;
+        }
+		return -1;
+    }
+}
