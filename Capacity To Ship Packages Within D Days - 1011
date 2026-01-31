@@ -12,8 +12,32 @@ class Solution {
 		return days;
 	}
 	public int shipWithinDays(int[] weights, int days) {
-        //Brute TC = O(N) + (O(N)*O(max-min+1)) =~ O(N*(MAX-MIN+1)) SC = O(1)
+         //Optimal TC = O(N) + (O(N)*O(log(max-min+1))) =~ O(log(MAX-MIN+1)*N) SC = O(1)
         int min =  Integer.MIN_VALUE;//max value from array;
+        int max = 0; // sum of all element in the array
+        for(int i =0;i<weights.length;i++) {//TC = O(N)
+        	min = Math.max(min, weights[i]);
+        	max+=weights[i];         		
+        }
+        if(days == 1)return max;
+        
+        int ans = 0;
+        while(min<=max) {//TC = O(log(max-min+1))
+        	int mid = min +(max-min)/2;
+        	int requiredDays = getDays(weights,mid);//TC = O(N)
+        	if(requiredDays <= days) {
+        		ans = mid;
+        		max = mid-1;
+        	}else {
+        		min = mid+1;
+        	}
+        }
+       
+		return ans;
+
+
+        //Brute TC = O(N) + (O(N)*O(max-min+1)) =~ O(N*(MAX-MIN+1)) SC = O(1)
+        /*int min =  Integer.MIN_VALUE;//max value from array;
         int max = 0; // sum of all element in the array
         for(int i =0;i<weights.length;i++) {//TC = O(N)
         	min = Math.max(min, weights[i]);
@@ -24,6 +48,6 @@ class Solution {
         	int requiredDays = getDays(weights,cap);//TC = O(N)
         	if(requiredDays <= days)return cap;
         }
-		return -1;
+		return -1;*/
     }
 }
