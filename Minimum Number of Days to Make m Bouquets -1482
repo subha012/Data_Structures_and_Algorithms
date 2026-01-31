@@ -1,6 +1,6 @@
     class Solution {
         public int minDays(int[] bloomDay, int m, int k) {
-            //OPtimal TC = O(N) + O(N) + (O(log(max − min)) *O(N)) = O(N log(max − min)) SC = O(1)
+            //OPtimal TC = O(N) + O(N) + (O(log(max − min)) *O(N)) = O(log(max-min+1) * N) SC = O(1)
             if((long)m*k>bloomDay.length)return -1;
             int min = getMin(bloomDay); //TC =O(N)
             int max = getMax(bloomDay);//TC =O(N)
