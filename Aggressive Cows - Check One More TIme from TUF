@@ -1,0 +1,27 @@
+class Solution {
+    public int aggressiveCows(int[] nums, int k) {
+		int n = nums.length;
+		Arrays.sort(nums);
+		int limit = nums[n-1]-nums[0];
+		for(int i = 1;i<=limit;i++) {
+			if(!canWePlace(nums,i,k)) {
+				return (i-1);
+			}
+		}
+		return limit;
+    }
+
+	private boolean canWePlace(int[] nums, int digi, int k) {
+		int n = nums.length;
+		int cntCow =1;
+		int last = nums[0];
+		for(int i = 1;i<n;i++) {
+			if(nums[i]-last >= digi) {
+				cntCow++;
+				last = nums[i];
+			}
+			if(cntCow >=k)return true;
+		}
+		return false;
+	}
+}
