@@ -1,0 +1,53 @@
+class Solution {
+    private int getSplitSubArrayCount(int[] nums, int low) {
+		int arrCnt =1,sum =0;
+		for(int i = 0;i<nums.length;i++) {
+			if(sum+nums[i]<=low) {
+				sum+=nums[i];
+			}else {
+				arrCnt++;
+				sum = nums[i];
+			}
+		}
+		return arrCnt;
+	}
+	public int splitArray(int[] nums, int k) {
+        //OPtimal TC = O(N) +O(log(max-min+1)*O(N)) SC = O(1)
+        int low = 0;//max value from the array
+		int high = 0;//sum of all elements from array
+		for(int i = 0;i<nums.length;i++) {
+			if(low<nums[i])low = nums[i];
+			high+=nums[i];
+		}
+		if(k>nums.length)return -1;
+		if(k == 1)return high;
+		
+		while(low<=high) {
+			int mid = low+(high-low)/2;
+			int arrCnt = getSplitSubArrayCount(nums,mid);
+			if(arrCnt > k) {
+				low= mid+1;
+			}else {
+				high = mid-1;
+			}
+		}
+		
+        return low;
+
+        //Brute force TC = O(N) +(O(N)*O(HIGH-LOW+1)) SC = O(1)
+		/*int low = 0;//max value from the array
+		int high = 0;//sum of all elements from array
+		for(int i = 0;i<nums.length;i++) {//O(N)
+			if(low<nums[i])low = nums[i];
+			high+=nums[i];
+		}
+		if(k>nums.length)return -1;
+		if(k == 1)return high;
+		
+		for(int i = low;i<=high;i++) {//O(HIGH-LOW+1)
+			int arrCnt = getSplitSubArrayCount(nums,i);//O(N)
+			if(arrCnt <= k)return i;
+		}
+        return -1;*/
+    }
+}
