@@ -1,0 +1,45 @@
+public static int rowWithMax1s(int[][] mat) {
+		//Optimal  TC = O(N*logM) SC = O(1)
+		int maxCount = 0;
+		int index = -1;
+		for(int i =0;i<mat.length;i++) {
+			int OneCount = mat[i].length - lowerBound(mat[i],1);
+			
+			if(OneCount>maxCount) {
+				maxCount = OneCount;
+				index = i;				
+			}
+		}
+		return index;
+		//Brute TC = O(N*M) SC = O(1)
+		/*int maxCount = 0;
+		int index = -1;
+		for(int i =0;i<mat.length;i++) {
+			int OneCount =0;
+			for(int j =0;j<mat[0].length;j++) {
+				if(mat[i][j]==1) {
+					OneCount++;
+				}
+			}
+			if(OneCount>maxCount) {
+				maxCount = OneCount;
+				index = i;				
+			}
+		}
+		return index;*/
+    }
+	
+	private static int lowerBound(int[] mat, int i) {
+		int low = 0,high = mat.length-1;
+		int ans = mat.length;
+		while(low<=high) {
+			int mid = low+(high-low)/2;
+			if(mat[mid]==i) {
+				ans = mid;
+				high = mid-1;
+			}else {
+				low = mid+1;
+			}
+		}
+		return ans;
+	}
