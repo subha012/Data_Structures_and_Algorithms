@@ -1,0 +1,35 @@
+class Solution {
+//Brute TC = O(N) + (O(N)*O(MAX)) SC = O(1)
+    public int findPages(int[] nums, int m) {
+		 int max = 0;
+		 int sum = 0;
+		 for(int i =0;i<nums.length;i++) {
+			 if(max<nums[i])max = nums[i];
+			 sum+=nums[i];
+		 }	
+		 if(m==1)return sum;
+		 if(m>nums.length)return -1;
+		 int minPages = Integer.MAX_VALUE;
+		 for(int i = max;i<=sum;i++) {
+			 int cntStudent = getCntStudent(nums,i);
+			 if(cntStudent == m) {
+				 return i;
+			 }
+		 }
+		 return -1;
+		 
+	 }
+	
+	private int getCntStudent(int[] nums, int max) {
+		int stu = 1,pagesPerStu = 0;
+		for(int i = 0;i<nums.length;i++) {
+			if(pagesPerStu+nums[i]<=max) {
+				pagesPerStu+=nums[i];
+			}else {
+				stu++;
+				pagesPerStu = nums[i];
+			}
+		}
+		return stu;
+	}
+}
