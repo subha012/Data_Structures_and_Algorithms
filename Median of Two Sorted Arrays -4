@@ -1,0 +1,24 @@
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //BRUTE TC = O(M)+O(N)+O((m+n)log(m+n)) SC = O(M+N) +O(LOG(M+N))
+        int[] merge = new int[nums1.length+nums2.length]; //SC = O(M+N)
+        int k = 0;
+        for(int  i = 0;i<nums1.length;i++) { //TC = O(M)
+        	merge[k] = nums1[i];
+        	k++;
+        }
+        for(int j = 0;j<nums2.length;j++) { //TC = O(N)
+        	merge[k] = nums2[j];
+            k++;
+        }
+        Arrays.sort(merge); // TC = O((m+n)log(m+n)) TC = O(LOG(M+N))
+        double median ;
+        int n = merge.length;
+        if(n%2 == 0) {
+        	median =(double) (merge[(n/2)-1]+merge[(n/2)])/2;
+        }else {
+        	median = merge[n/2];
+        }
+		return median;
+    }
+}
