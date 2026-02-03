@@ -1,0 +1,19 @@
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+public final class Solution {
+    public static int findMedian(int matrix[][], int m, int n) {
+        //Brute TC = O(n*m) + O(n*m log(n*m)) SC = O(1)
+        List<Integer> list = new LinkedList<>();
+		for (int[] row : matrix) {//O(n*m) 
+            for (int val : row) {
+                list.add(val);
+            }
+        }
+
+		Collections.sort(list);//O(n*m log(n*m))
+		int size = list.size();
+		
+		return list.get(size/2);
+    }
+}
