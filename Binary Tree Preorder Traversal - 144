@@ -16,6 +16,7 @@
 class Solution {
     
     public List<Integer>  preorderTraversal(TreeNode root) {
+			//Iterative
 	         List<Integer> list = new LinkedList<Integer>();
 	         if(root== null)return list;
 	         Stack<TreeNode> st = new Stack<TreeNode>();
@@ -28,5 +29,18 @@ class Solution {
 	         }
 	         
 	         return list;
+			//recursive
+			 /*List<Integer> list = new LinkedList<>();
+	        
+	        preOrder(root, list);
+	        return list;*/
+	    }
+	    public void preOrder(TreeNode root,List<Integer> result) {
+			if(root==null)return;
+            result.add(root.val);
+			preOrder(root.left, result);
+			
+			preOrder(root.right,result);
+		}
 	}
 }
