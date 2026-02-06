@@ -14,9 +14,23 @@
  * }
  */
 class Solution {
-    public int diameterOfBinaryTree(TreeNode root) {
+    //Optimal TC = O(N) SC = O(N)
+    int diameter = 0;
+	    public int diameterOfBinaryTree(TreeNode root) {
+	    	if(root == null)return 0;
+	    	height(root);
+	    	return diameter;
+	    }
+		private int height(TreeNode root) {
+			if(root == null)return 0;
+			int left = height(root.left);
+			int right = height(root.right);
+			diameter = Math.max(diameter, right+left);
+			return Math.max(left, right)+1;
+		}
+    /*public int diameterOfBinaryTree(TreeNode root) {        
         //TC = O(N2) SC = O(N)
-	        if(root == null)return 0;
+	       if(root == null)return 0;
 	    	int leftDia = diameterOfBinaryTree(root.left);
 	    	int rightDia = diameterOfBinaryTree(root.right);
 	    	int heightDia = height(root.left)+height(root.right);
@@ -28,5 +42,5 @@ class Solution {
 			int left = height(root.left);
 			int right = height(root.right);
 			return Math.max(left, right)+1;
-		}
+		}*/
 }
