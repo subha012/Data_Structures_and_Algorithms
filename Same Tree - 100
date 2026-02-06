@@ -1,6 +1,7 @@
 
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
+		//PreOrder Traversal is used here
         // TC = O(N) SC = O(N)
         if(p==null &&q==null)return true;
 		if(p == null || q == null) {
