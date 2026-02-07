@@ -1,0 +1,69 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+ class Pair{
+		int hd;
+		TreeNode node;
+		public Pair( TreeNode node,int hd) {
+			super();
+			this.hd = hd;
+			this.node = node;
+		}
+	}
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        //OPtimal TC = O(N) SC = O(N)
+         List<Integer> list = new LinkedList<Integer>();
+			 if(root == null)return list;
+			 Queue<TreeNode> q = new LinkedList<TreeNode>();//O(N)
+			 q.add(root);
+			 while(!q.isEmpty()) {//
+				 int size = q.size();
+				 for(int i = 0;i<size;i++) {//O(N)
+					 TreeNode temp = q.poll();
+					 if(i == size-1)list.add(temp.val);
+					 if(temp.left != null)q.add(temp.left);
+					 if(temp.right != null)q.add(temp.right);
+				 }		
+				 
+			 }
+			
+			 return list;
+        //Brute
+        //Each node is visited exactly once → O(N) & For every node, you do a map.put(...) & TreeMap operations take O(log L) & where L = number of levels (≤ N) Worst-case TC = O(N log N) sc = o(2n) treemap,queue
+       /* List<Integer> list = new LinkedList<Integer>();
+			 if(root == null)return list;
+			 Queue<Pair> q = new LinkedList<Pair>();
+			 Map<Integer, Integer> map  = new TreeMap<Integer, Integer>();
+			 q.add(new Pair(root,1));
+			 while(!q.isEmpty()) {
+				 int size = q.size();
+				 for(int i = 0;i<size;i++) {
+					 Pair it = q.poll();
+					 TreeNode temp = it.node;					 
+					 int hd = it.hd;
+					 map.put(hd,temp.val);
+					 if(temp.left != null)q.add(new Pair(temp.left,hd+1));
+					 if(temp.right != null)q.add(new Pair(temp.right,hd+1));
+				 }		
+				 
+			 }
+			 for(Map.Entry<Integer, Integer> e:map.entrySet()) {
+					list.add(e.getValue());
+				}
+			 return list;*/
+    }
+}
