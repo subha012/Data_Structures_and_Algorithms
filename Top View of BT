@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int data;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int val) { data = val; left = null, right = null }
+ * }
+ **/
+class Pair{
+		int hd;
+		TreeNode node;
+		public Pair( TreeNode node,int hd) {
+			super();
+			this.hd = hd;
+			this.node = node;
+		}
+	}
+class Solution {
+//Each node is visited once → O(N) & Each put/get in TreeMap costs O(log N)
+// TC = O(N log N)
+//Queue (level order): up to O(N) in worst case & Map (stores one value per horizontal distance): O(N) & Pair objects: included in queue space
+//Total SC = O(N)
+    public List<Integer> topView(TreeNode root) {
+			List<Integer> list = new LinkedList<Integer>();
+			if(root == null)return list;
+			Queue<Pair> q = new LinkedList<Pair>();
+			Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+			q.add(new Pair(root,0));
+			while(!q.isEmpty()) {
+				Pair it = q.remove();
+				int hd = it.hd;
+				TreeNode temp = it.node;
+				if(map.get(hd) == null)map.put(hd, temp.data);
+				if(temp.left!=null) {
+					q.add(new Pair(temp.left,hd-1));
+				}
+				if(temp.right != null) {
+					q.add(new Pair(temp.right,hd+1));
+				}
+			}
+			for(Map.Entry<Integer, Integer> e:map.entrySet()) {
+				list.add(e.getValue());
+			}
+			return list;
+	    }   
+}
