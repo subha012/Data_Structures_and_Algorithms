@@ -1,0 +1,26 @@
+class Solution {
+    boolean checkChildrenSum(TreeNode root) { 
+         if (root == null) return true;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+
+            // Leaf node → always valid
+            if (node.left == null && node.right == null)
+                continue;
+
+            int left = (node.left != null) ? node.left.val : 0;
+            int right = (node.right != null) ? node.right.val : 0;
+
+            if (left + right != node.val)
+                return false;
+
+            if (node.left != null) q.add(node.left);
+            if (node.right != null) q.add(node.right);
+        }
+        return true;
+    }
+}
