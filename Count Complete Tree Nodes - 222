@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int rightHeight(TreeNode root) {//O(LogN)
+			int lh = 0;
+			while(root!=null) {
+				lh++;
+				root = root.left;
+			}
+			return lh;
+		}
+		private int leftHeight(TreeNode root) { //O(LogN)
+			int rh = 0;
+			while(root!=null) {
+				rh++;
+				root = root.right;
+			}
+			return rh;
+		}
+    public int countNodes(TreeNode root) {
+        //Optimal TC = O(logN)^2 
+        //SC = O(LogN) recursion stack
+        if(root == null)return 0;
+	        int lh = leftHeight(root);
+	        int rh = rightHeight(root);
+	        
+	        if(lh == rh) { // checking if it's same TC = O(logN)
+	        	return (1<<lh)-1;
+	        }
+	        return 1+countNodes(root.left)+countNodes(root.right);
+        // Brute Tc = O(N) SC = O(N)
+        /*if(root == null)return 0;
+        int count = 1;
+	        Queue<TreeNode> q = new LinkedList<TreeNode>();
+	        q.add(root);
+	        while(!q.isEmpty()){
+	        	TreeNode node = q.poll();
+	        	if(node.left != null) {
+	        		q.add(node.left);
+	        		count++;
+	        	}
+	        	if(node.right != null) {
+	        		q.add(node.right);
+	        		count++;
+	        	}
+	        }
+	        return count;*/
+    }
+}
