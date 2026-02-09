@@ -1,0 +1,72 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int amountOfTime(TreeNode root, int start) {
+        //TC = O(N) SC = O(N) same as leetcode -863
+	        Map<TreeNode,TreeNode> parent = new HashMap<TreeNode, TreeNode>();
+	        TreeNode startNode = buildParentTree(root,parent,start);
+	        
+	        Queue<TreeNode> q = new LinkedList<TreeNode>();
+	        Map<TreeNode,Boolean> visited = new HashMap<TreeNode, Boolean>();
+	        q.add(startNode);
+	        visited.put(startNode, true);
+	        int time = 0;
+	        
+	        while(!q.isEmpty()) {
+	        	int size = q.size();
+	        	boolean ava = false;
+	        	for(int i =0;i<size;i++) {
+	        		TreeNode node = q.poll();
+	        		if(node.left!=null && visited.get(node.left) == null) {
+	        			q.add(node.left);
+	        			visited.put(node.left, true);
+	        			ava = true;
+	        		}
+	        		if(node.right!=null && visited.get(node.right) == null) {
+	        			q.add(node.right);
+	        			visited.put(node.right, true);
+	        			ava = true;
+	        		}
+	        		TreeNode p = parent.get(node);
+	        		if(p != null && visited.get(p) == null) {
+	        			q.add(p);
+	        			visited.put(p, true);
+	        			ava = true;
+	        		}
+	        	}
+	        	if(ava)time++;
+	        }
+	        return time;
+	    }
+		private TreeNode buildParentTree(TreeNode root, Map<TreeNode, TreeNode> parent, int start) {
+			Queue<TreeNode> q = new LinkedList<>();
+			TreeNode startNode = null; 
+			q.add(root);
+			while(!q.isEmpty()) {
+				TreeNode node = q.poll();
+				if(node.val == start)startNode = node;
+				if(node.left!=null) {
+					q.add(node.left);
+					parent.put(node.left, node);
+				}
+				if(node.right != null) {
+					q.add(node.right);
+					parent.put(node.right, node);
+				}
+			}
+			return startNode;
+		} 
+}
