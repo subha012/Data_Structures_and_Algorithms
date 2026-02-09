@@ -9,15 +9,17 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-			 Map<TreeNode,TreeNode> parent = new HashMap<TreeNode, TreeNode>();
-			 buildParentMap(root,parent);
+        //TC = O(N) + O(N) +O(N) ~ O(N)
+        //SC = O(N) + O(N) +O(N) ~ O(N)
+			 Map<TreeNode,TreeNode> parent = new HashMap<TreeNode, TreeNode>();//SC - O(N)
+			 buildParentMap(root,parent); //TC = O(N)
 			 
-			 Map<TreeNode,Boolean> visited = new HashMap<>();
-			 Queue<TreeNode> q = new LinkedList<TreeNode>();
+			 Map<TreeNode,Boolean> visited = new HashMap<>();//SC = O(N)
+			 Queue<TreeNode> q = new LinkedList<TreeNode>(); //SC = O(N)
 			 q.add(target);
 			 visited.put(target, true);
 			 int dist = 0;
-			 while(!q.isEmpty()) {
+			 while(!q.isEmpty()) {//TC = O(N)
 				 int size = q.size();
 				 if(dist == k)break;
 				 dist++;
@@ -40,14 +42,14 @@ class Solution {
 				 
 			 }
 			 
-		     List<Integer> list = new LinkedList<Integer>();	     
-		     while(!q.isEmpty()) {
+		     List<Integer> list = new LinkedList<Integer>();	      
+		     while(!q.isEmpty()) { //TC = O(N) WORST CASE
 		    	 TreeNode node = q.poll();
 		    	 list.add(node.val);
 		     }
 		     return list;
 		 }
-		private void buildParentMap(TreeNode root, Map<TreeNode, TreeNode> parent) {
+		private void buildParentMap(TreeNode root, Map<TreeNode, TreeNode> parent) {//TC = O(N)
 			Queue<TreeNode> q = new LinkedList<TreeNode>();
 			q.add(root);
 			while(!q.isEmpty()) {
