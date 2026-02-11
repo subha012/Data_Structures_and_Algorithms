@@ -15,9 +15,9 @@
  */
 class Solution {
 
-    /*int count = 0;
+    int count = 0;
 	int ans =-1;
-	//OPtimal
+	//OPtimal TC = O(h+k) SC = O(H)
 	public int kthSmallest(TreeNode root, int k) {
 		inOrderTraversal(root, k);
 		return ans;
@@ -31,9 +31,9 @@ class Solution {
 			return;
 		}
 		inOrderTraversal(root.right,k);
-	}*/
-    //Better TC = O(N) + O(N) SC = O(N)[COZ OF LIST] + O(H) [ RECURSION STACK]
-    public int kthSmallest(TreeNode root, int k) {
+	}
+    //Better TC = O(N) + O(N) SC = O(N)[COZ OF LIST] + O(H) [ RECURSION STACK] = O(N)
+    /*public int kthSmallest(TreeNode root, int k) {
 			List<Integer> list = new LinkedList<Integer>();
 			inOrderTraversal(root, list);
 			int ans = -1;
@@ -47,7 +47,7 @@ class Solution {
 			inOrderTraversal(root.left, list);
 			list.add(root.val);
 			inOrderTraversal(root.right, list);
-		}
+		}*/
 
     //Brute
     /*public int kthSmallest(TreeNode root, int k) {
