@@ -10,11 +10,21 @@
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //TC = O(H) SC = O(1)
+	       while(root != null) {
+	    	   int cur = root.val;
+	    	   if(cur<p.val && cur<q.val)root = root.right;
+	    	   else if(cur>p.val && cur>q.val)root = root.left;
+               else{
+                return root;
+               }
+	       }
+	       return null;
         //TC = O(H) SC = O(H) [recursion stack]
-        if(root == null)return null;
+        /*if(root == null)return null;
 	       int cur = root.val;
 	       if(cur<p.val && cur<q.val)return lowestCommonAncestor(root.right, p, q);
 	       if(cur>p.val && cur>q.val)return lowestCommonAncestor(root.left, p, q);
-	       return root;
+	       return root;*/
     }
 }
