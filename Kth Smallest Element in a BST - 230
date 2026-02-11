@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        //Brute TC = O(N) + O(N log N) + O(N)
+            // SC = O(N)+O(N)
+            int smallest = -1;
+	        List<Integer> list = new LinkedList<Integer>();//O(N)
+	        Queue<TreeNode> q = new LinkedList<TreeNode>();//O(N)
+	        if(root == null)return smallest;
+	        q.add(root);
+	        while(!q.isEmpty()) {//o(n)
+	        	TreeNode node = q.poll();
+	        	list.add(node.val);
+	        	if(node.left!=null)q.add(node.left);
+	        	if(node.right != null)q.add(node.right);
+	        }
+	        Collections.sort(list);//o(nlogn)
+	        for(int i = 0;i<k;i++) {//o(n)
+	        	smallest = list.get(i);
+	        }
+	        return smallest;
+    }
+}
