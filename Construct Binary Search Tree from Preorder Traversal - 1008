@@ -14,9 +14,19 @@
  * }
  */
 class Solution {
+    int i = 0;
+    private TreeNode build(int[] preorder, int maxValue) {
+		if(preorder.length== i || preorder[i]>maxValue)return null;
+		TreeNode root = new TreeNode(preorder[i++]);
+		root.left = build(preorder, root.val);
+		root.right = build(preorder, maxValue);
+		return root;
+	}
     public TreeNode bstFromPreorder(int[] preorder) {
+        //OPtimal TC = O(N) SC = O(H)[recursion stack]
+        return build(preorder,Integer.MAX_VALUE);
         //Brute TC = o(n2) sc = o(1)
-       if(preorder.length == 0)return null;
+       /*if(preorder.length == 0)return null;
         TreeNode root = new TreeNode(preorder[0]);
         for(int i = 1;i<preorder.length;i++) {
             TreeNode cur = root;
@@ -40,6 +50,6 @@ class Solution {
             	}
             }
         }
-        return root;
+        return root;*/
     }
 }
