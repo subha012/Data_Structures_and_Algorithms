@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+ class Pair{
+	TreeNode node;
+	long min;
+	long max;
+	public Pair(TreeNode node, long min, long max) {
+		super();
+		this.node = node;
+		this.min = min;
+		this.max = max;
+	}	
+}
+class Solution {
+    private boolean isValidBST(TreeNode root, long minValue, long maxValue) {
+		if(root == null)return true;
+		if(root.val <= minValue || root.val >= maxValue)return false;
+		return isValidBST(root.left, minValue, root.val) &&
+				isValidBST(root.right, root.val, maxValue);
+	}
+    public boolean isValidBST(TreeNode root) {
+        //TC = O(N) SC = O(H) [recursion stack]
+        return isValidBST(root,Long.MIN_VALUE,Long.MAX_VALUE);
+        //bRUTE TC = O(N) SC = O(N)
+        /*if(root == null)return true;
+		Queue<Pair> q = new LinkedList<Pair>();
+		q.add(new Pair(root,Long.MIN_VALUE,Long.MAX_VALUE));
+		while(!q.isEmpty()) {
+			Pair p = q.poll();
+			if(p.node.val <= p.min || p.node.val>= p.max)return false;
+			
+			if(p.node.left != null) {
+				q.add(new Pair(p.node.left,p.min,p.node.val));
+			}
+			if(p.node.right!=null) {
+				q.add(new Pair(p.node.right,p.node.val,p.max));
+			}
+		}
+		return true;*/
+	}
+}
