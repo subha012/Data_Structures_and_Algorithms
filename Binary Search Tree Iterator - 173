@@ -14,14 +14,38 @@
  * }
  */
 class BSTIterator { 
-   List<Integer> list;
+    //Optimal TC = O(H) SC = O(H)
+    Stack<TreeNode> st = new Stack<TreeNode>();
+
+    public BSTIterator(TreeNode root) {
+       pushAllLeft(root);
+    }
+    
+    private void pushAllLeft(TreeNode node) {
+		while(node!=null) {
+			st.push(node);
+			node = node.left;
+		}
+		
+	}
+	public int next() {
+        TreeNode node = st.pop();
+        if(node.right != null)pushAllLeft(node.right);
+        return node.val;
+    }
+    
+    public boolean hasNext() {
+        return !st.isEmpty();
+    }
+    //Brute TC = O(N) SC = O(N)+O(H)
+   /*List<Integer> list;
     int index;
     public BSTIterator(TreeNode root) {
-        list = new LinkedList<Integer>();
+        list = new LinkedList<Integer>();//sc = o(n)
         index = 0;
         inOrder(root);
     }    
-    private void inOrder(TreeNode root) {
+    private void inOrder(TreeNode root) { //TC- O(N) SC = O(H) [recursion stack]
 		if(root == null)return;
 		inOrder(root.left);
 		list.add(root.val);
@@ -34,6 +58,6 @@ class BSTIterator {
     
     public boolean hasNext() {
         return index<list.size();
-    }
+    }*/
 }
 
