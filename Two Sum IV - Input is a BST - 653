@@ -14,12 +14,64 @@
  * }
  */
 class Solution {
-//Brute
+    //OPtimal  TC = O(N) SC = O(H)
     public boolean findTarget(TreeNode root, int k) {
+		if(root == null)return false;
+		Stack<TreeNode> leftStack = new Stack<TreeNode>();//SC = O(H)
+		Stack<TreeNode> rightStack = new Stack<TreeNode>();//SC = O(H)
+		
+		pushToLeft(root,leftStack); // TC = O(H)
+		pushToRight(root,rightStack); //TC = O(H)
+		
+		while(!leftStack.isEmpty() && !rightStack.isEmpty() && leftStack.peek() != rightStack.peek()) {//TC = O(N)
+			int leftVal = leftStack.peek().val;
+			int rightVal = rightStack.peek().val;
+			int sum = leftVal+rightVal;
+			
+			if(sum == k)return true;
+			else if(sum<k) {
+				next(leftStack);
+			}else {
+				before(rightStack);
+			}
+		}
+		
+		return false;
+	}
+
+	private void before(Stack<TreeNode> rightStack) {
+		TreeNode node = rightStack.pop();
+		pushToRight(node.left, rightStack);
+		
+	}
+
+	private void next(Stack<TreeNode> leftStack) {
+		TreeNode node = leftStack.pop();
+		pushToLeft(node.right, leftStack);
+		
+	}
+
+	private void pushToRight(TreeNode root, Stack<TreeNode> rightStack) {
+		while(root!=null) {
+			rightStack.push(root);
+			root = root.right;
+		}
+		
+	}
+
+	private void pushToLeft(TreeNode root, Stack<TreeNode> leftStack) {
+		while(root!=null) {
+			leftStack.push(root);
+			root = root.left;
+		}
+		
+	}
+    /*
+        //Brute TC = O(2N) SC = O(N)
      List<Integer> list = new ArrayList<Integer>(); 
         inOrderTraversal(root,list);
         int i = 0,j = list.size()-1;
-        while(i<j) {
+        while(i<j) {// TC = O(N) SC = O(1)
         	int sum = list.get(i)+list.get(j);
         	if(sum == k) {
         		return true;
@@ -35,11 +87,11 @@ class Solution {
     	return false;
     }
 
-	private void inOrderTraversal(TreeNode root, List<Integer> list) {// O(N)
+	private void inOrderTraversal(TreeNode root, List<Integer> list) {// TC = O(N) SC = O(N)[Recursion stack] - WORST CASE(SKEWED TREE)
 		if(root == null)return;
 		inOrderTraversal(root.left, list);
 		list.add(root.val);
 		inOrderTraversal(root.right, list);
 		
-	}
+	}*/
 }
