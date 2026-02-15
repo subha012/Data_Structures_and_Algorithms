@@ -1,0 +1,54 @@
+import java.util.*;
+class Pair{
+	int first;
+	int second;
+	public Pair(int first, int second) {
+		super();
+		this.first = first;
+		this.second = second;
+	}
+}
+public class Solution 
+{
+    public static int getTotalIslands(int[][] grid) 
+	{
+        int count = 0;
+        if(grid == null || grid.length == 0)return 0;
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] vis = new int[n][m];
+        for(int i = 0;i<n;i++) {
+        	for(int j = 0;j<m;j++) {
+        		if(vis[i][j] != 1 && grid[i][j] == 1) {
+        			count++;
+        			dfs(grid,i,j,vis);
+        		}
+        	}
+        }
+        return count;
+    }
+	private static void dfs(int[][] grid, int row, int col, int[][] vis) {
+		vis[row][col] = 1;
+		Queue<Pair> q = new LinkedList<Pair>();
+		q.add(new Pair(row,col));
+		int n = grid.length;
+        int m = grid[0].length;
+        
+        while(!q.isEmpty()) {
+        	int qRow = q.peek().first;
+        	int qCol = q.peek().second;
+        	q.poll();
+        	for(int delRow = -1;delRow<=1;delRow++) {
+        		for(int delCol = -1;delCol<=1;delCol++) {
+        			int nRow = qRow+delRow;
+        			int nCol = qCol+delCol;
+        			if(nRow >= 0 && nCol>=0 &&nRow<n && nCol<m
+        			 &&grid[nRow][nCol] == 1 && vis[nRow][nCol] == 0) {
+        				vis[nRow][nCol] = 1;
+        				q.add(new Pair(nRow,nCol));
+        			}
+        		}
+        	}
+        }
+	}
+}
