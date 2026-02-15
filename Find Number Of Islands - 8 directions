@@ -10,14 +10,16 @@ class Pair{
 }
 public class Solution 
 {
+	//TC = O(N*M*9) +O(N*M)
+	//SC = O(N*M) +O(N*M)
     public static int getTotalIslands(int[][] grid) 
 	{
         int count = 0;
         if(grid == null || grid.length == 0)return 0;
         int n = grid.length;
         int m = grid[0].length;
-        int[][] vis = new int[n][m];
-        for(int i = 0;i<n;i++) {
+        int[][] vis = new int[n][m];//SC = O(N*M)
+        for(int i = 0;i<n;i++) {//TC = O(N*M)
         	for(int j = 0;j<m;j++) {
         		if(vis[i][j] != 1 && grid[i][j] == 1) {
         			count++;
@@ -29,17 +31,17 @@ public class Solution
     }
 	private static void dfs(int[][] grid, int row, int col, int[][] vis) {
 		vis[row][col] = 1;
-		Queue<Pair> q = new LinkedList<Pair>();
+		Queue<Pair> q = new LinkedList<Pair>();//O(N*M)
 		q.add(new Pair(row,col));
 		int n = grid.length;
         int m = grid[0].length;
         
-        while(!q.isEmpty()) {
+        while(!q.isEmpty()) { // TC = O(N*M * 9)
         	int qRow = q.peek().first;
         	int qCol = q.peek().second;
         	q.poll();
-        	for(int delRow = -1;delRow<=1;delRow++) {
-        		for(int delCol = -1;delCol<=1;delCol++) {
+        	for(int delRow = -1;delRow<=1;delRow++) {// TC = O(3)
+        		for(int delCol = -1;delCol<=1;delCol++) { // TC = O(3)
         			int nRow = qRow+delRow;
         			int nCol = qCol+delCol;
         			if(nRow >= 0 && nCol>=0 &&nRow<n && nCol<m
