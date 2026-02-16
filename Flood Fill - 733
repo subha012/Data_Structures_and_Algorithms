@@ -1,0 +1,32 @@
+class Solution {
+    //DFS Algo
+    //TC = O(N*M) SC = O(N*M)[recursion stack]
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        if(image.length == 0)return new int[][]{};
+        int[][] ans = image;
+        int initColor = image[sr][sc];
+        if(initColor == color)return image;
+        int delRow[] = {-1,0,1,0};
+        int delCol[] = {0,1,0,-1};// take two axis row and col if you go up then row = row-1 col = col, got right row = row,col = col+1,go down row = row+1,col = col and ge left row = row, col = col-1
+        dfs(sr,sc,ans,image,color,initColor,delRow,delCol);
+        return ans;
+    }
+
+	private void dfs(int row, int col, int[][] ans, int[][] image, int color, int initColor, int[] delRow, int[] delCol) {
+		ans[row][col] = color;
+		
+		 int n = image.length;
+		 int m = image[0].length;
+		 for(int i =0; i<4;i++) {
+			 int nRow = row+delRow[i];
+			 int nCol = col+delCol[i];
+			 
+			 if(nRow>=0 && nCol>=0 && nRow<n && nCol<m && 
+				image[nRow][nCol] == initColor && ans[nRow][nCol] != color) {
+				 dfs(nRow, nCol, ans, image, color, initColor, delRow, delCol);
+			 }
+			 
+		 }
+		
+	}
+}
