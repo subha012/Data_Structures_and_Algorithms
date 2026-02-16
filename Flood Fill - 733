@@ -1,7 +1,40 @@
 class Solution {
+    //BFS 
+    //TC=O(N*M) SC = O(N*M){Worst case if the entire matrix will change- Queue size can become n × m}
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int n = image.length;
+        int m = image[0].length;
+        if( n == 0 )return null;
+        int initColor = image[sr][sc];
+        if(initColor == color)return image;
+        
+        Queue<int[]> q = new LinkedList<int[]>();
+        q.add(new int[] {sr,sc});
+        image[sr][sc] = color;
+        int delRow[] = {-1,0,1,0};
+        int delCol[] = {0,1,0,-1};
+        
+        while(!q.isEmpty()) {
+        	int[] ceil = q.poll();
+        	int row = ceil[0];
+        	int col = ceil[1];
+        	for(int i = 0;i<4;i++) {
+        		int nRow = row+delRow[i];
+        		int nCol = col +delCol[i];
+        		if(nRow>=0 && nCol>=0 && nRow<n &&nCol<m && image[nRow][nCol] == initColor) {
+        			image[nRow][nCol] = color;
+                    q.add(new int[]{nRow,nCol});
+        		}
+        	}
+        	
+        }
+        
+        return image;
+    }
+
     //DFS Algo
     //TC = O(N*M) SC = O(N*M)[recursion stack]
-    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+    /*public int[][] floodFill(int[][] image, int sr, int sc, int color) {
         if(image.length == 0)return new int[][]{};
         int[][] ans = image;
         int initColor = image[sr][sc];
@@ -28,5 +61,5 @@ class Solution {
 			 
 		 }
 		
-	}
+	}*/
 }
