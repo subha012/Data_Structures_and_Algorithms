@@ -1,0 +1,61 @@
+class Pair{
+	int row;
+	int col;
+	int step;
+	public Pair(int row, int col, int step) {
+		super();
+		this.row = row;
+		this.col = col;
+		this.step = step;
+	}
+	
+}
+public class Solution {
+    //TC = O(N*M) +O(N*M*4) SC  = O(3(N*M)) 
+    public int[][] updateMatrix(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int[][] vis = new int[n][m];//SC - NO(N*M)
+        int[][] dist = new int[n][m];//SC - NO(N*M)  - This extra space to not change the original array
+        
+        Queue<Pair> q = new LinkedList<Pair>();//SC = O(N*M)
+        for(int i =0;i<n;i++) {//TC = O(N*M)
+        	for(int j = 0;j<m;j++) {
+        		if(mat[i][j] == 0) {
+        			vis[i][j] = 0;
+        			q.add(new Pair(i,j,0));
+        		}
+        		else {
+        			vis[i][j] = 1;
+        		}
+        	}
+        }
+        
+        int delRow[] = {-1,0,1,0};
+        int delCol[] = {0,1,0,-1};
+        //O(N*M*4)
+        while(!q.isEmpty()) {//TC - O(N*M)
+        	int row = q.peek().row;
+        	int col = q.peek().col;
+        	int step = q.peek().step;
+        	q.poll();
+        	
+        	dist[row][col] = step;
+        	
+        	for(int i =0;i<4;i++) {//O(4)
+        		int nRow = row+delRow[i];
+        		int nCol = col+delCol[i];
+        		
+        		if(nRow>=0 &&nCol>=0 && nRow<n && nCol<m && vis[nRow][nCol] == 1) {
+        			vis[nRow][nCol] = 0;
+        			q.add(new Pair(nRow,nCol,step+1));
+        		}
+        			
+        	}
+        }
+        
+        return dist;        
+        
+        
+    }
+}
