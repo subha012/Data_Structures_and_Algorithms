@@ -1,0 +1,59 @@
+class Solution {
+    public int numEnclaves(int[][] grid) {
+        //TC = O(m) + O(n) + O(n × m) + O(4*n × m) SC = O(N*M)[vis array] + O(N*M)[recusion stack]
+        int count = 0;
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        int[][] vis = new int[n][m];//O(N*M)
+        int delRow[] = {-1,0,1,0};
+        int delCol[] = {0,1,0,-1};
+        //traverse in row
+        for(int j = 0;j<m;j++) {//TC = O(M)
+        	//first row
+        	if(grid[0][j] == 1 && vis[0][j] == 0) {
+        		dfsNumEnclaves(0,j,grid,vis,delRow,delCol);
+        	}
+        	//last row
+        	if(grid[n-1][j] == 1 && vis[n-1][j] == 0) {
+        		dfsNumEnclaves(n-1, j, grid, vis, delRow, delCol);
+        	}
+        }
+        
+      //traverse in col
+        for(int i = 0;i<n;i++) {//TC = O(N)
+        	//first COL
+        	if(grid[i][0] == 1 && vis[i][0] == 0) {
+        		dfsNumEnclaves(i,0,grid,vis,delRow,delCol);
+        	}
+        	//last COL
+        	if(grid[i][m-1] == 1 && vis[i][m-1] == 0) {
+        		dfsNumEnclaves(i, m-1, grid, vis, delRow, delCol);
+        	}
+        }
+        
+        for(int i = 0;i<n;i++) {//TC = O(N*M)
+        	for(int j = 0;j<m;j++) {
+        		if(grid[i][j] == 1 && vis[i][j] == 0)count++;
+        	}
+        }
+        return count;
+        
+	}
+
+	private void dfsNumEnclaves(int row, int col, int[][] grid, int[][] vis, int[] delRow, int[] delCol) {
+		int n = grid.length;
+		int m = grid[0].length;
+		vis[row][col] = 1;
+		for(int i=0;i<4;i++) {//TC = O(4) * O(N*M)
+			int nRow = row+delRow[i];
+			int nCol = col+delCol[i];
+			
+			if(nRow>=0 && nCol>=0 && nRow<n && nCol<m && vis[nRow][nCol] == 0 && grid[nRow][nCol] ==1) {
+				dfsNumEnclaves(nRow, nCol, grid, vis, delRow, delCol);
+			}
+					
+		}
+		
+	}
+}
