@@ -1,0 +1,43 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+    public static ArrayList<Integer> topologicalSort(ArrayList<ArrayList<Integer>> edges, int v, int e) 
+	 {
+		 ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();// SC - O(V+E)
+		 for(int i = 0;i<v;i++) {//TC = O(V)
+			 adj.add(new ArrayList<Integer>());
+		 }
+		 
+		 for(int i =0;i<e;i++) {//TC = O(E)
+			 int u = edges.get(i).get(0);
+			 int w = edges.get(i).get(1);
+			 adj.get(u).add(w);
+		 }
+		 int vis[] = new int[v];
+		 Stack<Integer> st = new Stack<Integer>();//SC = O(V)
+		 for(int i = 0;i<v;i++) {//TC = O(V)
+			 if(vis[i] == 0) {
+				 dfsTopoSort(i,vis,st,adj);//O(V+E)
+			 }
+		 }
+		 
+		 ArrayList<Integer> list = new ArrayList<Integer>();//SC - O(V)[ BUT THIS IS FOR STORING THE ANSWER AND RETURN BACK]
+		 while(!st.isEmpty()) {//TC = O(V)
+			 list.add(st.peek());
+			 st.pop();
+		 }
+	     return list;
+	 }
+
+	private static void dfsTopoSort(int i, int[] vis, Stack<Integer> st, ArrayList<ArrayList<Integer>> adj) {
+		vis[i] = 1;
+		for(int it:adj.get(i)) {// TC = O(E)
+			if(vis[it] == 0) {
+				dfsTopoSort(it, vis, st, adj); // SC = O(V+E)[recursion stack]
+			}
+		}
+		st.push(i);
+		
+	}
+}
