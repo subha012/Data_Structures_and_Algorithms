@@ -1,5 +1,39 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
+		 int v = graph.length;
+	     LinkedList<ArrayList<Integer>> adj = new LinkedList<>();
+	     for(int i = 0;i<v;i++) {
+	      	adj.add(new ArrayList<Integer>());
+	     }
+	     int[] inDegree = new int[v];
+	     for(int i = 0; i < v; i++) {
+	    	 for(int it : graph[i]) {
+                 adj.get(it).add(i);//reverse the list coz in safe nodes we check outdegree but in kahn's Algo we check inDegree so by reversing the adj list we can implement the Kahn's topo logic
+                 inDegree[i]++;
+             }
+         }
+	     
+	     Queue<Integer> q = new LinkedList<Integer>();
+	     
+	     for(int i = 0;i<v;i++) {
+	    	 if(inDegree[i] == 0)q.add(i);
+	     }
+	     
+	     List<Integer> safeNode = new LinkedList<Integer>();
+	     while(!q.isEmpty()) {
+	    	 int node = q.poll();
+	    	 safeNode.add(node);
+	    	 for(int it:adj.get(node)) {
+	    		 inDegree[it]--;
+	    		 if(inDegree[it] == 0) {
+	    			 q.add(it);
+	    		 }
+	    	 }
+	     }
+	     Collections.sort(safeNode);
+	     return safeNode;
+	}
+    /*public List<Integer> eventualSafeNodes(int[][] graph) {
 	        int v = graph.length;
 	        LinkedList<ArrayList<Integer>> adj = new LinkedList<>();
 	        for(int i = 0;i<v;i++) {
@@ -48,5 +82,5 @@ class Solution {
 		return false;
 		
 		
-	}
+	}*/
 }
