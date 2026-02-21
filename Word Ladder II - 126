@@ -1,0 +1,58 @@
+class Solution {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<String>();
+        int len = wordList.size();
+        for(int i = 0;i<len;i++) {
+        	set.add(wordList.get(i));
+        }
+        
+        Queue<LinkedList<String>> q = new LinkedList<LinkedList<String>>();
+        LinkedList<String> ls = new LinkedList<String>();
+        
+        ls.add(beginWord);
+        q.add(ls);
+        
+        LinkedList<String> usedOnLevel = new LinkedList<String>();
+        usedOnLevel.add(beginWord);
+        int level = 0;
+        List<List<String>> ans = new LinkedList<List<String>>();
+        
+        while(!q.isEmpty()) {
+        	LinkedList<String> list = q.poll();
+        	//erase all words that has been used in the previous levels to transform
+        	if(list.size()>level) {
+        		level++;
+        		for(String s:usedOnLevel) {
+        			set.remove(s);
+        		}
+        	}
+        	//to get the last word from list to get other word from that word
+        	String word = list.get(list.size()-1);
+        	if(word.equals(endWord)) {
+        		if(ans.size() == 0) {
+        			ans.add(list);
+        		}
+        		else if(ans.get(0).size() == list.size()) {
+        			ans.add(list);
+        		}
+        	}
+        	
+        	for(int i = 0;i<word.length();i++) {
+        		for(char ch='a';ch<='z';ch++) {
+        			char replace[] = word.toCharArray();
+        			replace[i] = ch;
+        			String replaceWord = new String(replace);
+        			if(set.contains(replaceWord)) {
+        				list.add(replaceWord);
+        				LinkedList<String> temp = new LinkedList<String>(list);
+        				q.add(temp);
+        				usedOnLevel.add(replaceWord);
+        				list.remove(list.size()-1);
+        			}
+        		}
+        	}
+        	
+        }
+		return ans;
+    }
+}
