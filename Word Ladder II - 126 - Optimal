@@ -1,0 +1,67 @@
+public class ShortestPathGraph {	
+	String b="";
+	HashMap<String, Integer> map = new HashMap<String, Integer>();
+	List<List<String>> ans;
+	public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+	      Set<String> set = new HashSet<String>();
+	      int len = wordList.size();
+	      for(int i = 0;i<len;i++) {
+	    	  set.add(wordList.get(i));
+	      }
+	      
+	      Queue<String> q = new LinkedList<String>();
+	      b = beginWord;
+	      q.add(beginWord);
+	      map.put(beginWord,1);
+	      int bSize = beginWord.length();
+	      set.remove(beginWord);
+	      
+	      while(!q.isEmpty()) {
+	    	  String word = q.poll();
+	    	  int step = map.get(word);
+	    	  if(word.equals(endWord))break;
+	    	  for(int i = 0;i<bSize;i++) {
+	    		  for(char ch ='a';ch<='z' ;ch++) {
+	    			  char replace[] = word.toCharArray();
+	    			  replace[i] = ch;
+	    			  String replaceWord = new String(replace);
+	    			  if(set.contains(replaceWord)) {
+	    				  q.add(replaceWord);
+	    				  set.remove(replaceWord);
+	    				  map.put(replaceWord, step+1);
+	    			  }
+	    		  }
+	    	  }
+	      }
+	      ans = new ArrayList<>();
+	      if(map.containsKey(endWord)) {
+	    	  List<String> list = new ArrayList<String>();
+	    	  list.add(endWord);
+	    	  dfs(endWord,list);
+	      }
+		return ans;
+    }
+	private void dfs(String word, List<String> list) {
+		if(word.equals(b)) {
+			List<String> dup = new ArrayList<String>(list);
+			Collections.reverse(dup);
+			ans.add(dup);
+			return;
+		}
+		int steps = map.get(word);
+		int sz = word.length();
+		for(int i = 0;i<sz;i++) {
+			for(char ch ='a';ch<='z';ch++) {
+				char replace[] = word.toCharArray();
+  			  	replace[i] = ch;
+  			  	String replaceWord = new String(replace);
+  			  	if(map.containsKey(replaceWord) && map.get(replaceWord)+1 == steps) {
+  			  		list.add(replaceWord);
+  			  		dfs(replaceWord, list);
+  			  		list.remove(list.size()-1);
+  			  	}
+			}
+		}
+	}
+}
+
