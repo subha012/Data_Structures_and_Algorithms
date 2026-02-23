@@ -1,0 +1,52 @@
+class Pair{
+    int distance,node;
+    Pair(int distance,int node){
+        this.distance = distance;
+        this.node= node;
+    }
+}
+class Solution {
+    public int[] dijkstra(int v, int[][] edges, int src) {
+        
+        //TC = E logV [E- Total no of eedges, logV - no.of nodes]
+        ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+        for(int i = 0; i < v; i++) adj.add(new ArrayList<>());
+
+        for(int i = 0; i < edges.length; i++){
+            int u = edges[i][0];
+            int v1 = edges[i][1];
+            int wt = edges[i][2];
+            adj.get(u).add(new Pair(wt, v1));
+            adj.get(v1).add(new Pair(wt, u)); // remove if directed
+        }
+        
+        //Min heap
+        PriorityQueue<Pair> pq = new PriorityQueue<Pair>((x,y)->x.distance - y.distance);
+        
+      
+        
+        
+        int[] dist= new int[v];
+        for(int i =0;i<v;i++)dist[i] = (int)1e9;
+        dist[src] = 0;
+        pq.add(new Pair(0,src));
+        
+        while(!pq.isEmpty()){
+            int dis= pq.peek().distance;
+            int node = pq.peek().node;
+            
+            pq.remove();
+            
+            for(Pair it : adj.get(node)){
+                int edgeWeight = it.distance;
+                int adjNode = it.node;
+                
+                if(dis + edgeWeight < dist[adjNode]){
+                    dist[adjNode] = dis + edgeWeight;
+                    pq.add(new Pair(dist[adjNode], adjNode));
+                }
+            }
+        }
+        return dist;
+    }
+}
