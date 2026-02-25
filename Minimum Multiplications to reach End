@@ -1,0 +1,35 @@
+class Pair3{
+    int node;
+    int dist;
+
+    public Pair3(int node, int dist) {
+        this.node = node;
+        this.dist = dist;
+    }
+}
+
+class Solution {
+    int minimumMultiplications(int[] arr, int start, int end) {
+        Queue<Pair3> q = new LinkedList<>();//as the loop will go in level wise so use Queue
+        int mod = 100000;// given in the question
+        int[] dist = new int[mod];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[start] = 0;
+        q.add(new Pair3(start, 0));
+        while(!q.isEmpty()) {
+            Pair3 p = q.poll();
+            int node = p.node;
+            int dis = p.dist;
+            if(node == end) return dis;// if we found the end then return
+            for(int i = 0; i < arr.length; i++) {
+                int nodeI = (node * arr[i]) % mod;
+                if(dis + 1 < dist[nodeI]) {
+                    dist[nodeI] = dis + 1;
+                    q.add(new Pair3(nodeI, dis + 1));
+                }
+            }
+        }
+
+        return -1;
+    }
+}
