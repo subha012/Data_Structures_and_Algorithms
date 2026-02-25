@@ -1,0 +1,50 @@
+class Pair3{
+	int dist;
+	int node;
+	public Pair3( int node,int dist) {
+		super();
+		this.dist = dist;
+		this.node = node;
+	}
+	
+}
+class Solution {
+    public int networkDelayTime(int[][] times, int n, int k) {
+        ArrayList<ArrayList<Pair3>> adj = new ArrayList<ArrayList<Pair3>>();
+        //Create Adjaceny list(1 based indexing)
+        for(int i = 0;i<=n;i++) {
+        	adj.add(new ArrayList<Pair3>());
+        }
+        for(int i = 0;i<times.length;i++) {
+        	adj.get(times[i][0]).add(new Pair3(times[i][1], times[i][2]));
+        }
+        PriorityQueue<Pair3> q = new PriorityQueue<Pair3>((x,y)->x.dist-y.dist);
+        int[] dist = new int[n+1];
+        for(int i = 1;i<=n;i++) {//i based indexing
+        	dist[i] = Integer.MAX_VALUE;
+        }
+        dist[k] = 0;
+        q.add(new Pair3(k,0));
+        while(!q.isEmpty()) {
+        	Pair3 p = q.poll();
+        	int dis = p.dist;
+        	int node = p.node;
+        	for(Pair3 it:adj.get(node)) {
+        		int adjNode = it.node;
+        		int adjDist = it.dist;
+        		if(dis+adjDist<dist[adjNode]) {
+        			dist[adjNode] = dis+adjDist;
+        			q.add(new Pair3(adjNode,dis+adjDist));
+        		}
+        	}
+        }
+        int maxTime = 0;
+        //i based indexing
+        for(int i = 1;i<=n;i++) {// to get the max time required to travel from 1 to n 
+        	if(dist[i] == Integer.MAX_VALUE)return -1;
+        	maxTime = Math.max(maxTime, dist[i]);
+        }
+        
+        return maxTime;
+    }
+}
