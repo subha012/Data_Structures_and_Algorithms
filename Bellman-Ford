@@ -1,5 +1,5 @@
 // User function Template for Java
-
+//Check note for optimized solution where the loop iteration is stop after some instance
 class Solution {
     public int[] bellmanFord(int v, int[][] edges, int src) {
         int[] dist = new int[v];
