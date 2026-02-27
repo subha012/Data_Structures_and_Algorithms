@@ -1,0 +1,72 @@
+import java.util.*;
+// Use chatgpt for tc sc
+public class Solution {
+
+    static class DisjointSet {
+        int[] parent;
+        int[] rank;
+
+        DisjointSet(int n) {
+            parent = new int[n];
+            rank = new int[n];
+
+            for(int i = 0; i < n; i++) {
+                parent[i] = i;
+                rank[i] = 0;
+            }
+        }
+
+        int find(int node) {
+            if(parent[node] == node)
+                return node;
+
+            return parent[node] = find(parent[node]); // Path compression
+        }
+
+        void union(int u, int v) {
+            int pu = find(u);
+            int pv = find(v);
+
+            if(pu == pv) return;
+
+            if(rank[pu] < rank[pv]) {
+                parent[pu] = pv;
+            } else if(rank[pv] < rank[pu]) {
+                parent[pv] = pu;
+            } else {
+                parent[pv] = pu;
+                rank[pu]++;
+            }
+        }
+    }
+
+    public static int minimumSpanningTree(ArrayList<ArrayList<Integer>> edges, int n) {
+
+        // Step 1: Sort edges by weight
+        Collections.sort(edges, (a, b) -> a.get(2) - b.get(2));
+
+        DisjointSet ds = new DisjointSet(n);
+
+        int mstWeight = 0;
+        int count = 0;
+
+        // Step 2: Traverse sorted edges
+        for(ArrayList<Integer> edge : edges) {
+
+            int u = edge.get(0);
+            int v = edge.get(1);
+            int wt = edge.get(2);
+
+            if(ds.find(u) != ds.find(v)) {
+                mstWeight += wt;
+                ds.union(u, v);
+                count++;
+            }
+
+            if(count == n - 1)
+                break;
+        }
+
+        return mstWeight;
+    }
+}
