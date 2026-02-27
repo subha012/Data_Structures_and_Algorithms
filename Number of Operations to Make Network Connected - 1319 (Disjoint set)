@@ -1,0 +1,58 @@
+//TC = O(N^2) +O(N) + O(N) ~ O(N^2)
+//SC = O(N)
+class Disjoint{
+	List<Integer> parent = new ArrayList<Integer>();//SC = O(N)
+	List<Integer> size = new ArrayList<Integer>();//SC = O(N)
+	Disjoint(int n){//TC = O(N)
+		for(int i = 0;i<=n;i++) {//<= n because it can be 1 based indexing so in this way it will work for both based indexing
+			parent.add(i);
+			size.add(1);// as size of each node is 1
+		}
+	}
+	
+	public int findUParent(int node) {//TC = O(4α) = 1
+		if(node == parent.get(node)) {
+			return node;
+		}
+		int up = findUParent(parent.get(node));
+		parent.set(node, up);
+		return parent.get(node); //Path compression
+	}
+	void unionBySize(int u,int v) {//TC = O(4α) = 1
+		int pu = findUParent(u);
+		int pv = findUParent(v);
+		if(pu == pv)return;
+		if(size.get(pu)<size.get(pv)) {
+			parent.set(pu, pv);
+			size.set(pv, size.get(pu)+size.get(pv));
+		}else {
+			parent.set(pv, pu);
+			size.set(pu, size.get(pu)+size.get(pv));
+		}
+	}
+}
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        Disjoint ds = new Disjoint(n);
+        int countExtra = 0;
+        int m = connections.length;
+        for(int i = 0;i<m;i++) {//TC = O(M)
+        	int u = connections[i][0];
+        	int v = connections[i][1];
+        	if(ds.findUParent(u) == ds.findUParent(v)) {
+        		countExtra++;
+        	}
+        	else {
+        		ds.unionBySize(u, v);
+        	}
+        }
+        int countComponents = 0;
+        for(int i = 0;i<n;i++) {//TC = O(N)
+        	if(ds.parent.get(i) == i) countComponents++;
+        }
+        int ans = countComponents -1;
+        if(countExtra>=ans)return ans;
+        
+        return -1;
+    }
+}
