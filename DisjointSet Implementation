@@ -1,0 +1,73 @@
+package com.graph.Spanning;
+
+import java.util.LinkedList;
+import java.util.List;
+
+class Disjoint{
+	List<Integer> rank = new LinkedList<Integer>();
+	List<Integer> parent = new LinkedList<Integer>();
+	List<Integer> size = new LinkedList<Integer>();
+	Disjoint(int n){
+		for(int i = 0;i<=n;i++) {//<= n because it can be 1 based indexing so in this way it will work for both based indexing
+			rank.add(0);
+			parent.add(i);
+			size.add(1);// as size of each node is 1
+		}
+	}
+	
+	public int findUParent(int node) {
+		if(node == parent.get(node)) {
+			return node;
+		}
+		int up = findUParent(parent.get(node));
+		parent.set(node, up);
+		return parent.get(node);
+	}
+	void unionByRank(int u,int v) {// TC - O(4α)
+		int pu = findUParent(u);
+		int pv = findUParent(v);
+		if(pu == pv)return;      
+		if(rank.get(pu)<rank.get(pv)) {
+			parent.set(pv, pu);
+		}
+		else if(rank.get(pv)<rank.get(pu)) {
+			parent.set(pu, pv);
+		}else {//if same
+			parent.set(pv, pu);
+			int rankU = rank.get(pu);
+			rank.set(pu, rankU+1);
+		}
+	}
+	void unionBySize(int u,int v) { // TC - O(4α)
+		int pu = findUParent(u);
+		int pv = findUParent(v);
+		if(pu == pv)return;
+		if(size.get(pu)<size.get(pv)) {
+			parent.set(pu, pv);
+			size.set(pv, size.get(pu)+size.get(pv));
+		}else {
+			parent.set(pv, pu);
+			size.set(pu, size.get(pu)+size.get(pv));
+		}
+	}
+}
+public class DisJointSetGraph {
+	public static void main(String[] args) {
+		Disjoint ds = new Disjoint(7);
+		ds.unionBySize(1,2);
+		ds.unionBySize(2,3);
+		ds.unionBySize(4,5);
+		ds.unionBySize(6,7);
+		ds.unionBySize(5,6);
+
+		ds.unionBySize(3,7);
+		
+		if(ds.findUParent(3) == ds.findUParent(7)) {
+			System.out.println("Same");
+		}
+		else {
+			System.out.println("Not same");
+		}
+		
+	}
+}
