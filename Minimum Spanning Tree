@@ -1,0 +1,48 @@
+class Pair{
+	int node;
+	int dist;
+	public Pair(int dist,int node) {
+		super();
+		this.node = node;
+		this.dist = dist;
+	}
+}
+// For TC SC check notes
+class Solution {
+    public int spanningTree(int V, int[][] edges) {
+        ArrayList<ArrayList<Pair>> adj = new ArrayList<ArrayList<Pair>>();
+        for(int i = 0;i<V;i++) {
+        	adj.add(new ArrayList<Pair>());
+        }
+        for(int i = 0;i<edges.length;i++) {65
+        	int u = edges[i][0];
+        	int v = edges[i][1];
+        	int wt = edges[i][2];
+        	
+        	adj.get(u).add(new Pair(wt,v));
+        	adj.get(v).add(new Pair(wt,u));
+        }
+        
+        PriorityQueue<Pair> q = new PriorityQueue<Pair>((x,y)->x.dist-y.dist);
+        int[] vis = new int[V];
+        q.add(new Pair(0,0));
+        int sum = 0;
+        while(!q.isEmpty()) {
+        	Pair p = q.poll();
+        	int wt = p.dist;
+        	int node  = p.node;
+        	if(vis[node] == 1)continue;
+        	vis[node] = 1;
+        	sum = sum +wt;
+        	for(Pair it: adj.get(node)) {
+        		 int adjNode = it.node;
+        		 int adjWt = it.dist;
+        		 if(vis[adjNode] == 0) {
+        			 q.add(new Pair(adjWt,adjNode));
+        		 }
+        	}
+        	
+        }
+        return sum;
+    }
+}
