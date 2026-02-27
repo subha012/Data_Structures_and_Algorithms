@@ -31,6 +31,9 @@ class Disjoint{
 		}
 	}
 }
+/*if the components have same parents then no need to union them that time we can increase the extra connections once done check how many parents are then 
+if there will be n nodes of parents then there will n-1 edges 
+if the extra connections is greater than or equal to n-1 eddges then return n-1*/
 class Solution {
     public int makeConnected(int n, int[][] connections) {
         Disjoint ds = new Disjoint(n);
