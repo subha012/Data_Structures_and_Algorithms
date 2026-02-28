@@ -1,0 +1,85 @@
+class Disjoint{
+	List<Integer> parent = new ArrayList<Integer>();// SC = O(N)
+	List<Integer> size = new ArrayList<Integer>();// SC = O(N)
+	Disjoint(int n){
+		for(int i = 0;i<=n;i++) {//<= n because it can be 1 based indexing so in this way it will work for both based indexing
+			parent.add(i);
+			size.add(1);// as size of each node is 1
+		}
+	}
+	
+	public int findUParent(int node) {
+		if(node == parent.get(node)) {
+			return node;
+		}
+		int up = findUParent(parent.get(node));
+		parent.set(node, up);
+		return parent.get(node);
+	}
+	void unionBySize(int u,int v) {
+		int pu = findUParent(u);
+		int pv = findUParent(v);
+		if(pu == pv)return;
+		if(size.get(pu)<size.get(pv)) {
+			parent.set(pu, pv);
+			size.set(pv, size.get(pu)+size.get(pv));
+		}else {
+			parent.set(pv, pu);
+			size.set(pu, size.get(pu)+size.get(pv));
+		}
+	}
+	
+}
+/*
+N = number of accounts
+
+M = average number of emails per account
+
+E = total number of emails = N × M
+*/ 
+/*TC = O(N + E + E log E)
+= O(E log E)
+= O((N × M) log (N × M)) 
+
+SC = O(N+E)*/
+class Solution {
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        int n = accounts.size();
+        Disjoint ds = new Disjoint(n);
+        HashMap<String, Integer> map = new HashMap<String, Integer>();// SC = O(E)
+        for(int i = 0;i<n;i++) {// O(E × α(N)) ≈ O(E) ≈ O(N × M)
+        	for(int j = 1;j<accounts.get(i).size();j++) {// j = 1 because first one is the name 
+        		String mail = accounts.get(i).get(j);
+        		if(map.containsKey(mail) == false) {
+        			map.put(mail, i);// adding the index if it doesn't exist
+        		}else {
+        			ds.unionBySize(i, map.get(mail));//if the mail is already exist then found the parent
+        		}
+        	}
+        }//till this indexing done then need to arrange values to index
+        
+        //To arrange each value to it's respective index
+        ArrayList<ArrayList<String>> mergedMail = new ArrayList<ArrayList<String>>();// SC = O(N +E)
+        for(int i = 0;i<n;i++) {// TC = O(N)
+        	mergedMail.add(new ArrayList<String>());
+        }
+        for(Map.Entry<String, Integer> e:map.entrySet()) {// Map contains E emails. Each findUParent() ≈ O(1) TC = O(E)
+        	String mail = e.getKey();
+        	int node = ds.findUParent(e.getValue());
+        	mergedMail.get(node).add(mail);
+        }
+        //Answer list
+        List<List<String>> ans = new ArrayList<List<String>>();// SC = O(E)
+        for(int i = 0;i<n;i++) {// TC = O(N + E)
+        	if(mergedMail.get(i).size() == 0)continue;
+        	Collections.sort(mergedMail.get(i)); // TC = O(E log E)
+        	List<String> temp = new ArrayList<String>();
+        	temp.add(accounts.get(i).get(0));// adding the first value i.e name
+        	for(String s: mergedMail.get(i)) {//TC = O(E)
+        		temp.add(s);
+        	}
+        	ans.add(temp);
+        }
+        return ans;
+    }
+}
