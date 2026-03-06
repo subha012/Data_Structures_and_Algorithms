@@ -1,0 +1,41 @@
+class Solution {
+    public  boolean isPalindrome(String lower) {
+       
+       /* lower=lower.toLowerCase().replaceAll("[^a-z0-9]", "");
+    	String reversed = new StringBuilder(lower).reverse().toString();
+    	return reversed.equals(lower);*/
+
+		  String s1="";
+		  String s= lower.toLowerCase();
+		  for(int i =0;i<s.length();i++) {
+			  if((s.charAt(i)>=48 & s.charAt(i)<=57) || (s.charAt(i)>=97 & s.charAt(i) <=122 ) )   {
+				  s1=s1+s.charAt(i);              
+			  }
+		  }
+		  String reversed = new StringBuilder(s1).reverse().toString();
+		  if(s1.equals(reversed)) {
+			  return true;
+		  }
+		  
+		  return false;
+    }
+    
+
+    /*public static boolean isPalindrome(String s) {
+        s=s.toLowerCase();
+	    String s1 = "";
+	    for(int i = 0;i<s.length();i++) {
+	    	if((s.charAt(i) >=48 &&s.charAt(i)<=57) ||(s.charAt(i) >=97 &&s.charAt(i)<=122)
+	    			||(s.charAt(i) >=65 &&s.charAt(i)<=90)) {
+	    		s1+=s.charAt(i);
+	    	}
+	    }
+		return reverseString(s1.toCharArray(),0);
+    }
+
+	private static boolean reverseString(char[] c, int i) {
+		if(i>=c.length/2)return true;
+		if(c[i]!=c[c.length-i-1])return false;
+		return reverseString(c, i+1);
+    }*/	
+}
