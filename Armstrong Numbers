@@ -1,0 +1,20 @@
+// User function Template for Java
+class Solution {
+    static boolean armstrongNumber(int n) {
+		int num = n;
+		int length = 0;
+		int num1 = n;
+		while(num>0) {
+			length++;
+			num=num/10;
+		}
+		int sum = 0;
+		while(num1>0) {
+			int n1 = num1%10;
+			sum += (int) Math.pow(n1, length);
+			num1= num1/10;
+		}
+		if(sum == n)return true;
+        return false;
+    }
+}
