@@ -1,0 +1,19 @@
+public static Node removeKthNode(Node head, int k)
+    {
+		if(k == 1)return head.next;
+		int cnt = 0;
+		Node temp = head;
+		Node prev = null;
+		while(temp!=null) {
+			cnt++;
+			if(cnt == k) {
+				prev.next = prev.next.next;
+				break;
+			}
+			prev = temp;
+			temp = temp.next;
+			
+		}
+		return head;
+        
+    }
