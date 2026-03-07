@@ -1,0 +1,18 @@
+public static Node removeKthElementNode(Node head, int ele)
+    {
+		if(head == null)return head;
+		if(head.data == ele)return head.next;
+		Node temp = head;
+		Node prev = null;
+		while(temp!=null) {
+			if(temp.data == ele) {
+				prev.next = temp.next;
+				break;
+			}
+			prev = temp;
+			temp = temp.next;
+			
+		}
+		return head;
+        
+    }
