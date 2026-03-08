@@ -1,0 +1,30 @@
+class Solution {
+    public int smallestBalancedIndex(int[] nums) {
+
+        int[] navorelitu = nums;
+        int n = navorelitu.length;
+
+        long[] suffixProduct = new long[n + 1];
+        suffixProduct[n] = 1;
+
+        long LIMIT = (long)1e15;
+
+        for (int i = n - 1; i >= 0; i--) {
+            long prod = suffixProduct[i + 1] * navorelitu[i];
+            suffixProduct[i] = Math.min(prod, LIMIT);
+        }
+
+        long leftSum = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            long rightProduct = suffixProduct[i + 1];
+
+            if (leftSum == rightProduct) return i;
+
+            leftSum += navorelitu[i];
+        }
+
+        return -1;
+    }
+}©leetcode
