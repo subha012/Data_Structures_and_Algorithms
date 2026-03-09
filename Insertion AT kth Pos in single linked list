@@ -1,0 +1,51 @@
+package IntroductionDP;
+import java.util.*;
+class ListNode {
+     int val;
+     ListNode next;
+     ListNode(int x) { val = x; }
+}
+public class LinkedList {
+	public static ListNode insertNodeAtPosition(ListNode head, int data, int k) {
+		if(head == null) {
+			if(k == 1) {
+				return new ListNode(data);
+			}
+			else {
+				return head;
+			}
+		}
+		if(k == 1) {
+			ListNode node = new ListNode(data);
+			node.next = head;
+			head = node;
+			return head;					
+		}
+		int cnt = 0;
+		ListNode temp = head;
+		while(temp != null) {
+			cnt++;
+			if(cnt == k-1) {
+				ListNode node = new ListNode(data);
+				node.next = temp.next;
+				temp.next = node;
+				break;
+			}
+			temp = temp.next;
+		}
+		return head;
+	}
+	public static void main(String[] args) {
+		ListNode head = new ListNode(1);
+	    head.next = new ListNode(2);
+	    head.next.next = new ListNode(3);
+	    head.next.next.next = new ListNode(5);
+
+	    head = insertNodeAtPosition(head, 4, 6);
+	    ListNode temp = head;
+	    while(temp != null) {
+	        System.out.print(temp.val + " ");
+	        temp = temp.next;
+	    }
+	}
+}
