@@ -1,0 +1,39 @@
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        //Optimal TC = O(N) SC = O(1)
+		 int zeroCount = 0;
+		 int totalProduct = 1;
+		 int[] ans = new int[nums.length];
+		 for(int i = 0;i<nums.length;i++) {
+			 if(nums[i] == 0)zeroCount++;
+			 else {
+				 totalProduct *= nums[i];
+			 }
+		 }
+		 
+		 for(int i = 0;i<nums.length;i++) {
+			 if(zeroCount>1) {
+				 ans[i] = 0;
+			 }
+			 else if(zeroCount == 1) {
+				 ans[i] = nums[i] == 0? totalProduct:0;
+			 }
+			 else {
+				 ans[i] = totalProduct/nums[i];
+			 }
+		 }
+		 return ans;
+		 //Brute TC = O(N^2) SC = O(N) for ans array
+	    /*int[] ans = new int[nums.length];
+	    for(int i =0;i<nums.length;i++) {
+	    	int product = 1;
+	    	for(int j = 0;j<nums.length;j++) {
+	    		if(i!=j) {
+	    			product = product * nums[j];
+	    		}
+	    	}
+	    	ans[i] = product;
+	    }
+	    return ans;*/
+    }
+}
