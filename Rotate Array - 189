@@ -1,0 +1,49 @@
+class Solution {
+    public static int[] reverse(int[] nums,int start,int end) {
+		while(start<end){
+			int temp =nums[start];
+			nums[start] = nums[end];
+			nums[end] = temp;
+			start++;
+			end--;
+		}
+		return nums;
+	}
+    public void rotate(int[] nums, int k) {
+
+        //Optimal solution TC =O(N) SC = O(1)
+        int n = nums.length;
+		k = k%n;
+        reverse(nums,0,n-1);// first revrse the entire array
+		reverse(nums,0,k-1);//reverse the array from start till k - 1
+		reverse(nums,k,n-1);//reverse the array from k till n-1;
+
+            //Brute force TC = O(n*k) SC= )=O(1)
+            /*for(int i =0;i<k;i++) {   
+		 		int temp = nums[nums.length-1];
+	        	for(int j = nums.length-1;j>0;j--) {
+	        		nums[j]= nums[j-1];	        		
+	        	}
+	        	nums[0] = temp;	    
+	        }*/
+
+            //Brute force TC =O(nk) SC=O(1)
+             /*int j = 1;
+        for(int i = 1;i<=k;i++){ //O(k)
+            rotateToright(nums);
+        }*/      
+    }
+    public int[] rotateToright(int[] nums){
+        int j =1;
+        int[] arr = new int[nums.length];//O(n) - sc
+        arr[0] = nums[nums.length-1];
+        for(int i =0;i<nums.length-1;i++){//O(n)
+            arr[j] = nums[i];
+            j++;
+        }
+        for(int i =0;i<nums.length;i++){//O(n)
+            nums[i] = arr[i];
+        }
+        return nums;
+    }
+}
