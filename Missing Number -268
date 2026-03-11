@@ -1,0 +1,47 @@
+class Solution {
+    public int missingNumber(int[] nums) {
+        //optimal TC=O(n) SC = O(1)
+		 int sum =0;
+		 int n = nums.length;
+		 int totalsum = n*(n+1)/2; // sum of n natural number
+		 for(int i =0;i<n;i++) {
+			 sum +=nums[i];
+		 }
+		 return totalsum-sum;
+
+        //Better TC = O(2n) SC =O(n)
+        /*int[] hash = new int[nums.length+1];
+		 for(int i =0;i<nums.length;i++) {
+			 hash[nums[i]] =1;
+		 }
+		 for(int i =0;i<hash.length;i++) {
+			 if(hash[i] != 1)return i;
+		 }
+		 return 0;*/
+
+
+        //Brute force TC = O(n^2) SC =O(1)
+        /*for(int i =1;i<=nums.length;i++) {
+	    	  int flag =0;
+	    	  for(int j = 0;j<nums.length;j++) {
+	    		  if(nums[j] == i) {
+	    			  flag++;
+	    			  break;	    			  
+	    		  }
+	    	  }
+	    	  if(flag == 0) {
+	    		  return i;
+	    	  }
+	      }
+	        return 0;*/
+       /*Arrays.sort(nums);
+        int j =0;
+        for(int i = 0;i<nums.length;i++) {
+        	if(nums[i] != i)return i;
+        	else {
+        		j=i+1;
+        	}
+        }
+        return j;*/
+    }
+}
