@@ -1,0 +1,40 @@
+class Solution {
+    public double findMaxAverage(int[] nums, int k) {
+        //optimal
+        double max = Double.NEGATIVE_INFINITY;//smaller than any possible number.
+		int left =0;
+		int count = 1;
+		double sum =0;
+		for(int right = 0;right<nums.length;right++) {
+			sum+=nums[right];
+			if(right-left+1>k) {
+				sum -=nums[left];
+				left++;
+			}
+			if(right-left+1 == k) {
+				max=Math.max(max, sum);
+			}		
+		}
+		return max/k;
+        //brute force
+        /*double max = 0;
+        for(int i =0;i<nums.length;i++) {
+        	double sum =0;
+        	int count = 1;
+        	for(int j =i;j<nums.length;j++) {
+        		if(count <= k) {
+        			sum +=nums[j];
+        			System.out.print(sum+" ");
+        			count++;
+        		}
+        		
+        	}
+        	if(count==k+1)
+        		max=Math.max(max, sum/k);
+            if(count==k+1 && sum < 0) {
+        		max=Math.min(max, sum/k);
+        	}
+        }
+        return max;*/
+    }
+}
